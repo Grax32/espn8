@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'espn';
+    src: url('esp.ttf') format('truetype');
+}
+
+header,
+nav,
+article,
+footer {
+    width: 100%;
+    padding: 1em 5em;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+header .espn {
+    font-family: espn;
+    font-size: 2em;
+}
+
+header {
+    background-color: darkgray;
+    font-weight: bold;
+    color: red;
+    text-shadow: 0 0 2px black, 0 0 1px green;
+}
+
+nav {
+    background-color: burlywood;
+}
+
+article {
+    background-color: cornflowerblue;
+    flex: 1;
+}
+
+footer {
+    background-color: crimson;
+}
