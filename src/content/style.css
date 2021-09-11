@@ -10,6 +10,15 @@
     src: url('esp.ttf') format('truetype');
 }
 
+p {
+    margin: 1em;
+    font-size: 22px;
+}
+
+p b {
+    font-size: 1.2em;
+}
+
 header,
 nav,
 article,
@@ -28,24 +37,44 @@ body {
 header .espn {
     font-family: espn;
     font-size: 2em;
+    background-color: red;
+    color: white;
+    display: block;
+    transform: skew(-20deg);
+    padding: 0 1em;
+    height: 100%;
+    width: fit-content;
 }
 
 header {
-    background-color: darkgray;
+    padding: 0;
+    padding-left: 3em;
+    background-color: black;
     font-weight: bold;
     color: red;
-    text-shadow: 0 0 2px black, 0 0 1px green;
+    text-shadow: 2px 2px black;
+    border: 3px solid black;
 }
 
 nav {
-    background-color: burlywood;
+    background-color: darkgray;
 }
 
 article {
-    background-color: cornflowerblue;
+    background-color: lightgray;
     flex: 1;
+    box-shadow: 1px 1px darkgray;
 }
 
 footer {
-    background-color: crimson;
+    background-color: white;
+    display: flex;
+}
+
+footer .espn {
+    font-family: espn;
+    font-size: 2em;
+    color: red;
+    padding-right: 1em;
+    text-shadow: 1px 1px rgba(0, 0, 0, .5);
 }
