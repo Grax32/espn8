@@ -6,8 +6,8 @@
 }
 
 @font-face {
-    font-family: 'espn';
-    src: url('esp.ttf') format('truetype');
+    font-family: "espn";
+    src: url("esp.ttf") format("truetype");
 }
 
 p {
@@ -76,5 +76,47 @@ footer .espn {
     font-size: 2em;
     color: red;
     padding-right: 1em;
-    text-shadow: 1px 1px rgba(0, 0, 0, .5);
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.tabs {
+    border: 2px solid blue;
+}
+
+.tab {
+    opacity: 0;
+    min-height: 200px;
+    width: 100%;
+    height: fit-content;
+    position: absolute;
+    display: block;
+    padding: 5px;
+}
+
+.tab.selected {
+    transition: opacity 2s;
+    position: unset;
+    display: block;
+    right: unset;
+    opacity: 1;
+    overflow: auto;
+}
+
+.tabButtons {
+    display: flex;
+    flex-direction: row;
+}
+
+.tabButtons a {
+    display: block;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.tabButtons a.selected {
+    background-color: black;
+    color: white;
+    font-weight: bold;
 }
