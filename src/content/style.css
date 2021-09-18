@@ -94,7 +94,7 @@ footer .espn {
 }
 
 .tab.selected {
-    transition: opacity 2s;
+    transition: opacity 1s;
     position: unset;
     display: block;
     right: unset;
