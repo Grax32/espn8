@@ -4,22 +4,7 @@
 <head>
     <title>ESPN 8: The OCHO</title>
     <link rel="stylesheet" href="content/style.css" />
-    <script>
-        function forEachElement(selector, action) {
-            var qry = document.querySelectorAll(selector);
-            for (var i = 0; i < qry.length; i++) {
-                action(qry[i]);
-            }
-        }
-
-        function selectTab(tabSelector) {
-            forEachElement(".tab", (el) => el.classList.remove("selected"));
-            forEachElement(".tabButtons a", (el) => el.classList.remove("selected"));
-
-            document.querySelector(".tabs " + tabSelector).classList.add("selected");
-            document.querySelector(".tabButtons " + tabSelector).classList.add("selected");
-        }
-    </script>
+    <script src="content/script.js"></script>
 </head>
 
 <body>
@@ -46,22 +31,45 @@
 
         <div class="tabBlock">
             <div class="tabButtons">
-                <a class="tab1 selected" onclick="selectTab('.tab1')">Dana Baker</a>
-                <a class="tab2" onclick="selectTab('.tab2')">Hai Nguyen</a>
-                <a class="tab3" onclick="selectTab('.tab3')">Erik Muller</a>
-                <a class="tab4" onclick="selectTab('.tab4')">Denver Matthews</a>
+                <a class="tab1 selected">Dana Baker</a>
+                <a class="tab2">Hai Nguyen</a>
+                <a class="tab3">Erik Muller</a>
+                <a class="tab4">Denver Matthews</a>
             </div>
 
             <div class="tabs">
                 <div class="tab1 tab selected">
                     <p>
-                        <b>Dana Baker</b> had been training hard in the rockies for the past 2 years. The first 30 miles of the flat boring wasteland zoomed as if it wasn't even there. She took a short break, drinking a Gatorade and eating a sandwich
+                        <b>Dana Baker</b> had been training hard in the Rockies for the past 2 years. The first 30 miles of the flat boring wasteland zoomed as if it wasn't even there. She took a short break, drinking a Gatorade and eating a sandwich
                         before anyone else caught up with her. Back on the road, she continued to increase her lead as she started up the incline. Precisely at the 60 mile mark, she stopped and set up her small tent, built a small fire and made some supper.
                     </p>
-                    <p>Although the sun rose around 6:30, Dana didn't emerge from her sleeping bag until 8 AM. She rekindled the fire, cooked some grits, and set off around 9 into the mountains.</p>
+                    <p>
+                        Although the sun rose around 6:30, Dana didn't emerge from her sleeping bag until 8 AM. She rekindled the fire, cooked some grits, and set off around 9 into the mountains. Her training in Colorado was paying off and she was making great time on the mountain
+                        roads. She was elated that no one on the team was close to her fitness level in the mountains. For a moment, her attention wavered. She hit a rut in the road, similar to many she had encountered while training, but this one caught
+                        the front wheel of her tricycle and brought it to a dead stop.
+                    </p>
+                    <p>
+                        The next thing she knew, she was flying through the air. She put out an arm to catch herself and heard a crack as she came down. The pain was excruciating and she knew the race was over at that point. She activated her emergency beacon and an air ambulance
+                        picked her up in about 45 minutes.
+                    </p>
+                    <p>Her race was over.</p>
                 </div>
                 <div class="tab2 tab">
-                    <p><b>Hai Nguyen</b> also started with a relatively brisk pace,</p>
+                    <p><b>Hai Nguyen</b> also started with a relatively brisk pace. He was able to put in 40 to 50 mile days for a week and a half.</p>
+                    <p>Arriving in Coldfoot, he checked into the Coldfoot Camp. Seeing an opportunity to recharge, he chose to stay an extra day.</p>
+                    <p>The next day, as he was leaving Coldfoot, he passed a small RV. Behind the RV, a man emerged from a small wooded area pushing a woman ahead of him.</p>
+                    <p>Hai noticed chains between her ankles. "Stop, let her go!," he said. The man responded, "Make me, tricycle boy!"</p>
+                    <p>Hai dropped into a karate-style stance. The other man pushed the woman to the ground and followed suit.</p>
+                    <p>"I don't really know karate," Hai said, then he rushed full-tilt at the man.</p>
+                    <p>
+                        The man swiftly pulled a gun from holster in the small of his back and fired into Hai's left arm. Hai hit him a brief moment later, knocking him backwards and sending the gun flying. Hai scrambled for the gun, grabbing it and rolling over to point the
+                        gun at the man. The man lunged towards him and Hai fired 3 shots center mass, killing the man instantly.
+                    </p>
+                    <p>
+                        Hai activated his emergency beacon and police and air ambulance responded. The woman told of being abducted from a store near her home in Vancouver and held captive for the past 2 months. Hai and the woman were transported to Fairbanks Memorial Hospital
+                        for treatment.
+                    </p>
+                    <p>His race was over.</p>
                 </div>
                 <div class="tab3 tab">
                     <p><b>Erik Muller</b></p>
@@ -79,10 +87,12 @@
 
         <p>
             <b>Unceremoniously,</b> the race came to an abrupt end. Instead of the extended drama of traversing multiple countries in their quest for riches, this race turned out to be the shortest ever.
-            <b>Dana</b> recovered from her broken leg in about 6 weeks. She's back on her bikes, but she's not planning to participate in any more tricycle events.
-            <b>Hai</b> was granted the Alaska Medal of Honor for his actions in rescuing the kidnapped woman. He is still working to get full mobility on his left arm.
-            <b>Erik</b> was charged with assault for his altercation and sentenced to 8 years in prison.
-            <b>Denver</b> was remembered as a tough contender.
+        </p>
+        <p><b>Dana</b> recovered from her broken arm in about 6 weeks. She's back on her bikes, but she's not planning to participate in any more tricycle events.</p>
+        <p><b>Hai</b> was granted the Alaska Medal of Honor for his actions in rescuing the kidnapped woman. He is still working to get full mobility on his left arm.</p>
+        <p><b>Erik</b> was charged with assault for his altercation and sentenced to 8 years in prison.</p>
+        <p>
+            <b>Denver</b> was buried in Bozeman next to his wife who had passed away 7 years ago. His son, Arnold, told us, "Dad went out the way he would have wanted, having a grand adventure riding his tricycle."
         </p>
         <p>
             The race organizers say this was the final run of the overly ambitious race. Rather than running it again, they tell me they are focusing the more reasonable 14,000 mile trek from Capetown, South Africa to Magadan, Russia on elliptical bikes.
