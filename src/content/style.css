@@ -91,6 +91,7 @@ footer .espn {
     width: 50vw;
     height: fit-content;
     position: absolute;
+    top: -1000px;
     display: block;
 }
 
@@ -98,6 +99,7 @@ footer .espn {
     transition: opacity 1s;
     position: unset;
     right: unset;
+    top: unset;
     opacity: 1;
     width: 100%;
     padding: 5px;
@@ -120,4 +122,21 @@ footer .espn {
     background-color: black;
     color: white;
     font-weight: bold;
+}
+
+a summary {
+    display: none;
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+    background-color: whitesmoke;
+    border: 3px solid black;
+    border-radius: 5px;
+    padding: 2px;
+    margin-top: 18px;
+    z-index: 5;
+}
+
+a:hover summary {
+    display: inline-block;
 }
