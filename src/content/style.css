@@ -140,3 +140,27 @@ a summary {
 a:hover summary {
     display: inline-block;
 }
+
+.results {
+    margin: 1em;
+}
+
+.results h3 {
+    font-size: 18px;
+}
+
+.results pre {
+    margin-left: 1em;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.results .active {
+    color: blue;
+    font-weight: bold;
+}
+
+.results .inactive {
+    color: red;
+    font-weight: bold;
+}
