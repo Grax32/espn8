@@ -24,7 +24,7 @@ nav,
 article,
 footer {
     width: 100%;
-    padding: 1em 5em;
+    padding: 1em;
 }
 
 body {
@@ -153,6 +153,7 @@ a:hover summary {
     margin-left: 1em;
     font-family: monospace;
     font-size: 14px;
+    white-space: pre-wrap;
 }
 
 .results .active {
