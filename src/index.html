@@ -4,14 +4,17 @@
 <head>
     <title>ESPN 8: The OCHO</title>
       <style>
+          * {
+              margin: 0;
+              padding: 0;
+          }
     /* The parent container will use flexbox to center the image */
     .container {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh; /* Full viewport height */
-      background-color: white;
-      box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+      background-color: white;      
     }
 
     /* The image will scale without distortion and keep its aspect ratio */
@@ -19,6 +22,7 @@
       max-width: 100%; /* Maximum width of the image is the container's width */
       max-height: 100%; /* Maximum height of the image is the container's height */
       object-fit: contain; /* Ensures the image is not distorted */
+      box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  
     }
   </style>
 </head>
