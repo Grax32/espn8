@@ -1,5 +1,5 @@
-/307/* /success 307!
-/401/* /success 401!
-/403/* /success 403!
-/503/* /success 503!
-/500/* /success 500!
+/status/307 /success 307
+/status/401 /success 401
+/status/403 /success 403
+/status/503 /success 503
+/status/500 /success 500
