@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Epic Stunt Performer Nation - ESPN8</title>
+      <style>
+          * {
+              margin: 0;
+              padding: 0;
+          }
+    /* The parent container will use flexbox to center the image */
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* Full viewport height */
+      background-color: white;      
+    }
+
+    /* The image will scale without distortion and keep its aspect ratio */
+    .image {
+      max-width: 100%; /* Maximum width of the image is the container's width */
+      max-height: 100%; /* Maximum height of the image is the container's height */
+      object-fit: contain; /* Ensures the image is not distorted */
+      box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  
+    }
+
+         .title {
+             top: 10vh;
+            text-align: center;
+            border: 2px solid #000;
+            padding: 2vh;
+            display: block;
+            font-size: 6vh;
+             position: absolute;
+             z-index: 10;
+             background-color: rgba(255,255,255,.6);
+        }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <img src="content/epic-stunt-performers-2.png" alt="Epic Stunt Performer Nation" class="image">
+      <h1 class="title">Epic Stunt Performer Nation</h1>
+  </div>
+</body>
+
+</html>
