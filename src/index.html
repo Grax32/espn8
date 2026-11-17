@@ -1,137 +1,1282 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="ESPN8 The Ocho – Epic Mountain Dodgeball and the world's most extraordinary competitive spectacles." />
-	<title>ESPN8 – Epic Mountain Dodgeball HQ</title>
-	<link rel="preload" as="font" href="content/esp.ttf" type="font/ttf" crossorigin>
-	<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>0xATHLETICS // Zero-Latency Box Scores & Telemetry</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for crisp technical & sports icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            obsidian: '#090b10',
+            panel: '#0f131a',
+            panelHover: '#161b25',
+            borderDark: '#1e2533',
+            neonCyan: '#06b6d4',
+            neonEmerald: '#10b981',
+            neonAmber: '#f59e0b',
+            neonCrimson: '#ef4444',
+          },
+          animation: {
+            'marquee': 'marquee 40s linear infinite',
+            'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-50%)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #090b10;
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar for terminal aesthetic */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090b10;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e2533;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
+    /* Pause marquee on hover */
+    .marquee-container:hover .animate-marquee {
+      animation-play-state: paused;
+    }
+
+    /* Subtle CRT grid background overlay */
+    .bg-grid-pattern {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(30, 37, 51, 0.35) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 37, 51, 0.35) 1px, transparent 1px);
+    }
+
+    /* Custom JSON Syntax Highlighting */
+    .json-key { color: #38bdf8; }
+    .json-string { color: #34d399; }
+    .json-number { color: #fbbf24; }
+    .json-boolean { color: #f87171; }
+    .json-null { color: #94a3b8; }
+  </style>
 </head>
-<body>
-	<a class="skip-link" href="#main">Skip to main content</a>
-	<header class="site-header">
-		<div class="logo-wrap">
-			<div class="logo">ESPN8<span class="dot">•</span></div>
-			<div class="tagline" aria-live="polite" id="taglineRotator">The Ocho</div>
-		</div>
-		<nav class="main-nav" aria-label="Primary">
-			<ul>
-				<li><a href="#featured">Featured</a></li>
-				<li><a href="#why">Why Mountain Dodgeball</a></li>
-				<li><a href="#schedule">Schedule</a></li>
-				<li><a href="#sports">All Sports</a></li>
-				<li><a href="#interactive">Altitude Lab</a></li>
-			</ul>
-		</nav>
-	</header>
+<body class="bg-grid-pattern min-h-screen flex flex-col font-sans antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
 
-	<section class="hero" id="featured" role="banner" aria-labelledby="heroTitle">
-		<div class="hero-media">
-			<div class="mountain-bg" aria-hidden="true"></div>
-			<div class="grain" aria-hidden="true"></div>
-		</div>
-		<div class="hero-content">
-			<div class="hero-text">
-				<h1 id="heroTitle"><span class="highlight">Epic Mountain Dodgeball</span><br><span class="sub">Where Altitude Amplifies Impact</span></h1>
-				<p class="lede">High-altitude air thins. Reflexes sharpen. Every dodge, dive, dip, duck & dodge becomes legend. Welcome to the summit of spectacle.</p>
-				<div class="hero-stats" aria-label="Live environmental stats">
-					<div class="stat"><span class="label">Current Altitude</span><span class="value" id="altitudeValue" aria-live="polite">–</span></div>
-					<div class="stat"><span class="label">Ball Velocity (avg)</span><span class="value" id="velocityValue">92 km/h</span></div>
-					<div class="stat"><span class="label">Oxygen Saturation</span><span class="value" id="oxygenValue">88%</span></div>
-				</div>
-				<div class="cta-bar">
-					<button class="cta primary" id="watchNow">Watch Live Trial Run</button>
-					<button class="cta ghost" id="scrollToSchedule">Upcoming Matches ↓</button>
-				</div>
-			</div>
-			<figure class="hero-image" role="group" aria-labelledby="heroImageCaption">
-				<picture>
-					<!-- Future responsive sources could be added here -->
-					<img src="content/a-photograph-of-player-mid-throw.png" width="640" height="800" loading="eager" decoding="async" alt="Mountain dodgeball athlete mid-throw launching a red ball at altitude." />
-				</picture>
-				<figcaption id="heroImageCaption" class="visually-hidden">High-altitude dodgeball player executing a powerful uphill release.</figcaption>
-			</figure>
-		</div>
-	</section>
+  <!-- Toast Notification Container (Replaces alert()) -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-	<main id="main" tabindex="-1">
-		<section class="panel why" id="why">
-			<h2>Why Mountain Dodgeball?</h2>
-			<div class="grid why-points">
-				<article>
-					<h3>Altitude Strategy</h3>
-					<p>Reduced air density slightly alters ball trajectories, rewarding players with precision spin control and predictive spatial intuition.</p>
-				</article>
-				<article>
-					<h3>Endurance vs Burst</h3>
-					<p>Elite competitors balance explosive dives with oxygen conservation—turning cardio pacing into a tactical layer.</p>
-				</article>
-				<article>
-					<h3>Terrain Variability</h3>
-					<p>Custom carved plateau courts introduce micro‑tilt zones that can accelerate or deaden rolling rebounds.</p>
-				</article>
-				<article>
-					<h3>Spectacle Factor</h3>
-					<p>Snow flurries. Cloud inversions. Sunset alpenglow. Every match inherits the drama of the mountain itself.</p>
-				</article>
-			</div>
-		</section>
+  <!-- 1. TOP SYSTEM TELEMETRY BAR (LIVE TICKER) -->
+  <div class="bg-[#06080c] border-b border-borderDark text-xs font-mono py-2 px-3 flex items-center gap-3 overflow-hidden relative z-30">
+    <div class="flex items-center gap-2 shrink-0 bg-panel border border-borderDark px-2.5 py-1 rounded text-emerald-400 font-semibold shadow-sm">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-fast"></span>
+      <span>SYS_TELEMETRY</span>
+    </div>
+    
+    <div class="marquee-container flex-1 overflow-hidden relative">
+      <div id="telemetry-ticker" class="flex items-center gap-6 whitespace-nowrap animate-marquee w-max">
+        <!-- Populated via JS for seamless looping -->
+      </div>
+    </div>
 
-		<section class="panel schedule" id="schedule" aria-labelledby="scheduleHeading">
-			<h2 id="scheduleHeading">Upcoming Mountain Dodgeball Matches</h2>
-			<div id="scheduleList" class="schedule-list" aria-live="polite"></div>
-			<div class="legend">All times local summit time (UTC ± Dynamic)</div>
-		</section>
+    <div class="hidden md:flex items-center gap-2 shrink-0 text-slate-400 text-[11px] bg-panel/70 px-2 py-1 rounded border border-borderDark">
+      <span>UPTIME: <span class="text-emerald-400">99.994%</span></span>
+      <span class="text-slate-600">|</span>
+      <span id="live-clock">UTC 00:00:00</span>
+    </div>
+  </div>
 
-		<section class="panel interactive" id="interactive">
-			<h2>Altitude Performance Lab</h2>
-			<p>Simulate how altitude impacts dodgeball aerodynamics. Adjust conditions & watch projected ball arc.</p>
-			<form class="sim-form" id="simForm" aria-describedby="simNote">
-				<label>Altitude (m)
-					<input type="range" id="simAltitude" min="500" max="4200" value="2500" step="100" />
-				</label>
-				<label>Throw Velocity (km/h)
-					<input type="number" id="simVelocity" min="20" max="140" value="90" />
-				</label>
-				<label>Ball Type
-					<select id="simBall">
-						<option value="foam">Foam (Std)</option>
-						<option value="pro-rubber">Pro Rubber</option>
-						<option value="aero-core">Aero-Core</option>
-					</select>
-				</label>
-				<button type="button" id="runSim" class="cta small">Run Simulation</button>
-				<div id="simNote" class="note">Model uses simplified drag decay vs density; illustrative only.</div>
-			</form>
-			<div class="sim-output">
-				<canvas id="simCanvas" width="600" height="260" aria-label="Projected trajectory chart"></canvas>
-				<div class="sim-metrics" id="simMetrics"></div>
-			</div>
-		</section>
+  <!-- 2. MAIN NAVIGATION & GLOBAL VIEW MODE TOGGLE -->
+  <header class="sticky top-0 z-20 bg-obsidian/90 backdrop-blur-md border-b border-borderDark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      
+      <!-- Brand Identity -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-mono font-bold text-lg shadow-lg shadow-cyan-950/30">
+            0x
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white font-mono">
+                0x<span class="text-cyan-400">ATHLETICS</span>
+              </h1>
+              <span class="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">v4.2.0-rc3</span>
+            </div>
+            <p class="text-xs text-slate-400 font-mono">Zero-latency box scores. Zero human bias. 100% over-engineered.</p>
+          </div>
+        </div>
+      </div>
 
-		<section class="panel sports" id="sports" aria-labelledby="allSportsHeading">
-			<h2 id="allSportsHeading">The Ocho Roster</h2>
-			<div class="filters" role="toolbar" aria-label="Category filters">
-				<button class="filter active" data-filter="all" aria-pressed="true">All</button>
-				<button class="filter" data-filter="dodgeball">Dodgeball</button>
-				<button class="filter" data-filter="combat">Combat</button>
-				<button class="filter" data-filter="precision">Precision</button>
-				<button class="filter" data-filter="team">Team</button>
-				<button class="filter" data-filter="animal">Animal</button>
-				<button class="filter" data-filter="endurance">Endurance</button>
-				<button class="filter" data-filter="stunt">Stunt</button>
-				<button class="filter" data-filter="mind">Mind</button>
-			</div>
-			<div id="sportsGrid" class="sports-grid" aria-live="polite"></div>
-		</section>
-	</main>
+      <!-- View Mode Switcher & cURL Endpoint -->
+      <div class="flex flex-wrap items-center gap-3">
+        <!-- cURL Snippet Pill -->
+        <div class="hidden sm:flex items-center bg-panel border border-borderDark rounded-lg px-3 py-1.5 text-xs font-mono text-slate-300 gap-2">
+          <span class="text-emerald-400 select-none">$</span>
+          <code id="curl-cmd" class="text-slate-300">curl -s https://api.0xathletics.io/v1/feed | jq</code>
+          <button onclick="copyToClipboard('curl -s https://api.0xathletics.io/v1/feed | jq', 'cURL command copied to clipboard!')" class="text-slate-400 hover:text-cyan-400 transition-colors p-1 rounded" title="Copy cURL command">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
 
-	<footer class="site-footer">
-		<p><strong>ESPN8 • The Ocho</strong> – Celebrating the gloriously unconventional.</p>
-		<p class="legal">Not an official ESPN property. Demo concept environment. All sport names used for illustrative purposes.</p>
-	</footer>
+        <!-- Global GUI vs RAW_JSON Toggle -->
+        <div class="bg-panel p-1 rounded-lg border border-borderDark flex items-center font-mono text-xs shadow-inner" role="group" aria-label="View Mode">
+          <button id="btn-gui-mode" onclick="setViewMode('GUI')" class="px-3 py-1.5 rounded-md font-semibold transition-all flex items-center gap-1.5 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm">
+            <i class="fa-solid fa-table-columns"></i>
+            <span>GUI (HUMAN_READABLE)</span>
+          </button>
+          <button id="btn-json-mode" onclick="setViewMode('JSON')" class="px-3 py-1.5 rounded-md font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200 border border-transparent">
+            <i class="fa-solid fa-code"></i>
+            <span>RAW_JSON</span>
+          </button>
+        </div>
+      </div>
+    </div>
 
-	<script src="script.js" defer></script>
+    <!-- Sub-Navigation League Filter Bar -->
+    <div id="sub-nav" class="border-t border-borderDark/70 bg-panel/40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center gap-2 overflow-x-auto text-xs font-mono">
+        <span class="text-slate-500 uppercase mr-1 shrink-0">Namespaces:</span>
+        <button onclick="filterFeed('ALL')" class="nav-pill active px-2.5 py-1 rounded bg-slate-800 text-cyan-400 border border-cyan-500/30 shrink-0">/all</button>
+        <button onclick="filterFeed('SRE')" class="nav-pill px-2.5 py-1 rounded hover:bg-slate-800/70 text-slate-400 hover:text-slate-200 border border-transparent shrink-0">/sre-postmortems</button>
+        <button onclick="filterFeed('SEC')" class="nav-pill px-2.5 py-1 rounded hover:bg-slate-800/70 text-slate-400 hover:text-slate-200 border border-transparent shrink-0">/cve-injuries</button>
+        <button onclick="filterFeed('AI')" class="nav-pill px-2.5 py-1 rounded hover:bg-slate-800/70 text-slate-400 hover:text-slate-200 border border-transparent shrink-0">/prompt-golf-league</button>
+        <button onclick="filterFeed('DEPS')" class="nav-pill px-2.5 py-1 rounded hover:bg-slate-800/70 text-slate-400 hover:text-slate-200 border border-transparent shrink-0">/trade-resolver</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- RAW_JSON VIEW CONTAINER (Hidden by default)                           -->
+  <!-- ===================================================================== -->
+  <main id="json-view" class="hidden max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1">
+    <div class="bg-panel border border-borderDark rounded-xl overflow-hidden shadow-2xl">
+      <div class="bg-[#0b0e14] px-4 py-3 border-b border-borderDark flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2 font-mono text-xs">
+          <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold">HTTP/1.1 200 OK</span>
+          <span class="text-slate-400">Content-Type: application/json; charset=utf-8</span>
+          <span class="hidden sm:inline text-slate-500">|</span>
+          <span class="hidden sm:inline text-cyan-400">X-Cache: HIT (0.42ms)</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="copyRawJson()" class="px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-mono text-xs flex items-center gap-1.5 transition-all">
+            <i class="fa-regular fa-copy"></i>
+            <span>Copy Payload</span>
+          </button>
+          <button onclick="setViewMode('GUI')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-xs transition-all">
+            Exit Raw Mode
+          </button>
+        </div>
+      </div>
+      <div class="p-4 sm:p-6 overflow-x-auto max-h-[78vh]">
+        <pre id="json-output" class="font-mono text-xs sm:text-sm leading-relaxed"></pre>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- GUI (HUMAN_READABLE) VIEW CONTAINER                                   -->
+  <!-- ===================================================================== -->
+  <main id="gui-view" class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 space-y-8">
+
+    <!-- DEVTOOLS SPONSORSHIP BANNER #1 -->
+    <div class="bg-gradient-to-r from-[#0d1422] via-[#11192b] to-[#0d1422] border border-cyan-500/30 rounded-xl p-3.5 px-5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg">
+      <div class="flex items-center gap-3 text-center sm:text-left">
+        <span class="px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded shrink-0">PARODY_AD</span>
+        <p class="text-xs sm:text-sm text-slate-200 font-medium">
+          <span class="text-cyan-400 font-mono font-bold">JetBrains Playbook Inspector:</span> Find unreachable receivers, dead routes, and questionable coaching logic before committing your starting lineup.
+        </p>
+      </div>
+      <button onclick="showToast('Opening JetBrains — fictional playbook inspection sold separately.', 'info')" class="shrink-0 px-3 py-1.5 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 font-mono text-xs font-semibold transition-all">
+        Refactor Your Offense →
+      </button>
+    </div>
+
+    <!-- PRIMARY GRID: HERO POST-MORTEM (Left 8 cols) + SIDEBAR TELEMETRY (Right 4 cols) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <!-- LEFT COLUMN: HERO FEATURED STORY / SRE INCIDENT POST-MORTEM -->
+      <section id="section-sre" class="lg:col-span-8 bg-panel border border-borderDark rounded-xl overflow-hidden shadow-xl">
+        <!-- Article Header -->
+        <div class="p-5 sm:p-6 border-b border-borderDark bg-gradient-to-b from-[#131924] to-panel">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2 font-mono text-xs">
+              <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-semibold">SEV-1 INCIDENT</span>
+              <span class="text-slate-400">INC-2026-1117</span>
+              <span class="text-slate-600">•</span>
+              <span class="text-cyan-400">SRE_SPORTS_DESK</span>
+            </div>
+            <span class="font-mono text-xs text-slate-400">Read time: 340ms (4 min human)</span>
+          </div>
+
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-snug mb-2">
+            Root Cause Analysis: Cascading Q4 Clock Management Outage in Buffalo
+          </h2>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            A single-threaded coaching brain deadlocked on 4th-and-2, triggering a 13-second preventable victory collapse and wiping out +94.2% Bayesian Win Probability.
+          </p>
+
+          <!-- Interactive Article Tabs -->
+          <div class="flex items-center gap-2 mt-5 pt-4 border-t border-borderDark/80 overflow-x-auto font-mono text-xs">
+            <button id="tab-btn-report" onclick="switchArticleTab('report')" class="article-tab px-3.5 py-2 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 font-semibold flex items-center gap-2 shrink-0">
+              <i class="fa-solid fa-file-medical-alt"></i>
+              <span>Incident Report</span>
+            </button>
+            <button id="tab-btn-telemetry" onclick="switchArticleTab('telemetry')" class="article-tab px-3.5 py-2 rounded-lg bg-obsidian/60 text-slate-400 hover:text-slate-200 border border-borderDark font-semibold flex items-center gap-2 shrink-0">
+              <i class="fa-solid fa-chart-area"></i>
+              <span>Telemetry &amp; Win-Prob Diff</span>
+            </button>
+            <button id="tab-btn-pr" onclick="switchArticleTab('pr')" class="article-tab px-3.5 py-2 rounded-lg bg-obsidian/60 text-slate-400 hover:text-slate-200 border border-borderDark font-semibold flex items-center gap-2 shrink-0">
+              <i class="fa-solid fa-code-pull-request"></i>
+              <span>GitHub PR Comments (<span id="pr-count">3</span>)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 1: INCIDENT REPORT -->
+        <div id="tab-content-report" class="p-5 sm:p-6 space-y-5 text-sm text-slate-300 leading-relaxed">
+          <!-- Metadata Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-obsidian/80 p-3.5 rounded-lg border border-borderDark font-mono text-xs">
+            <div>
+              <div class="text-slate-500 text-[10px] uppercase">Incident Commander</div>
+              <div class="text-slate-200 font-semibold mt-0.5">Head Coach (Legacy v1)</div>
+            </div>
+            <div>
+              <div class="text-slate-500 text-[10px] uppercase">Root Cause</div>
+              <div class="text-rose-400 font-semibold mt-0.5">Prevent_Defense.dll</div>
+            </div>
+            <div>
+              <div class="text-slate-500 text-[10px] uppercase">MTTR</div>
+              <div class="text-amber-400 font-semibold mt-0.5">8 Months (Offseason)</div>
+            </div>
+            <div>
+              <div class="text-slate-500 text-[10px] uppercase">SLA Breach</div>
+              <div class="text-rose-400 font-semibold mt-0.5">-100% Playoff Equity</div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-white font-mono font-bold text-sm uppercase tracking-wider mb-2 flex items-center gap-2">
+              <span class="text-cyan-400">01 //</span> Executive Summary
+            </h3>
+            <p>
+              At 23:41:08 UTC, following a high-throughput offensive touchdown drive that pushed win-probability metrics to <code class="text-emerald-400 bg-obsidian px-1.5 py-0.5 rounded border border-borderDark">0.942</code>, the defensive coordinator deployed an un-tested configuration (<code class="text-amber-300 bg-obsidian px-1.5 py-0.5 rounded border border-borderDark">--soft-zone-25yds</code>) while simultaneously failing to execute a squib-kick rate limiter on special teams.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-white font-mono font-bold text-sm uppercase tracking-wider mb-2 flex items-center gap-2">
+              <span class="text-cyan-400">02 //</span> Timeline of Cascading Failures (UTC)
+            </h3>
+            <div class="bg-obsidian rounded-lg border border-borderDark p-3.5 font-mono text-xs space-y-2.5">
+              <div class="flex items-start gap-3">
+                <span class="text-emerald-400 shrink-0">00:13.0</span>
+                <span class="text-slate-300"><strong class="text-white">[INFO]</strong> Touchback executed. Opponent offense initialized at 25-yard line with 3 timeouts in cache.</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-amber-400 shrink-0">00:08.4</span>
+                <span class="text-slate-300"><strong class="text-amber-400">[WARN]</strong> Edge rushers throttled to 40% CPU. Opposing QB experiences 0ms pocket pressure.</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-rose-400 shrink-0">00:03.1</span>
+                <span class="text-slate-300"><strong class="text-rose-400">[ERR!]</strong> Unhandled seam route exception (<code class="text-rose-300">NullPointerCoverageException</code>). 25-yard gain + Timeout #2 popped.</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-rose-500 shrink-0">00:00.0</span>
+                <span class="text-slate-300"><strong class="text-rose-500">[CRIT]</strong> 49-yard Field Goal payload delivered. Fanbase mental state: <code class="text-rose-400">SIGSEGV (Core Dumped)</code>.</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-white font-mono font-bold text-sm uppercase tracking-wider mb-2 flex items-center gap-2">
+              <span class="text-cyan-400">03 //</span> Action Items (Remediation)
+            </h3>
+            <ul class="space-y-1.5 font-mono text-xs text-slate-300">
+              <li class="flex items-center gap-2"><input type="checkbox" checked disabled class="accent-cyan-500"> <span>Deprecate "Iced Kicker" timeout heuristic (shown to have p=0.89 noise).</span></li>
+              <li class="flex items-center gap-2"><input type="checkbox" disabled class="accent-cyan-500"> <span>Replace Offensive Coordinator with a fine-tuned 70B Llama-3 LoRA trained on Madden 2004 Vick playbooks.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TAB 2: TELEMETRY & WIN-PROB DIFF -->
+        <div id="tab-content-telemetry" class="hidden p-5 sm:p-6 space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-white font-mono font-bold text-sm">BAYESIAN WIN PROBABILITY &amp; HEART-RATE LATENCY</h3>
+              <p class="text-xs text-slate-400">Interactive SVG Telemetry Stream (Hover nodes to inspect frame state)</p>
+            </div>
+            <div class="flex items-center gap-3 font-mono text-xs">
+              <span class="flex items-center gap-1.5 text-cyan-400"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span> Win Prob %</span>
+              <span class="flex items-center gap-1.5 text-rose-400"><span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span> Coach Panic (ms)</span>
+            </div>
+          </div>
+
+          <!-- Interactive Telemetry SVG Chart -->
+          <div class="bg-obsidian border border-borderDark rounded-xl p-4 relative">
+            <svg viewBox="0 0 600 220" class="w-full h-auto overflow-visible font-mono text-[10px]">
+              <!-- Grid Lines -->
+              <line x1="40" y1="20" x2="580" y2="20" stroke="#1e2533" stroke-dasharray="4" />
+              <line x1="40" y1="65" x2="580" y2="65" stroke="#1e2533" stroke-dasharray="4" />
+              <line x1="40" y1="110" x2="580" y2="110" stroke="#1e2533" stroke-dasharray="4" />
+              <line x1="40" y1="155" x2="580" y2="155" stroke="#1e2533" stroke-dasharray="4" />
+              <line x1="40" y1="190" x2="580" y2="190" stroke="#334155" />
+
+              <!-- Y-Axis Labels -->
+              <text x="5" y="24" fill="#64748b">100%</text>
+              <text x="10" y="69" fill="#64748b">75%</text>
+              <text x="10" y="114" fill="#64748b">50%</text>
+              <text x="10" y="159" fill="#64748b">25%</text>
+              <text x="15" y="194" fill="#64748b">0%</text>
+
+              <!-- X-Axis Labels -->
+              <text x="40" y="210" fill="#64748b">Q1</text>
+              <text x="175" y="210" fill="#64748b">Q2</text>
+              <text x="310" y="210" fill="#64748b">Q3</text>
+              <text x="445" y="210" fill="#64748b">Q4 (0:13)</text>
+              <text x="550" y="210" fill="#ef4444">OT</text>
+
+              <!-- Win Probability Area Fill -->
+              <polygon points="40,110 120,95 200,125 290,80 380,60 465,28 520,105 575,188 575,190 40,190" fill="rgba(6, 182, 212, 0.1)" />
+
+              <!-- Win Probability Line -->
+              <polyline fill="none" stroke="#06b6d4" stroke-width="2.5" points="40,110 120,95 200,125 290,80 380,60 465,28 520,105 575,188" />
+
+              <!-- Coach Panic Spike Line -->
+              <polyline fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4 2" points="40,175 120,165 200,150 290,155 380,140 465,130 520,45 575,22" />
+
+              <!-- Interactive Data Nodes -->
+              <g class="cursor-pointer group" onclick="inspectNode('Q4 00:13', '94.2%', '18ms', 'Touchdown scored. Win probability peaks before Prevent Defense deployment.')">
+                <circle cx="465" cy="28" r="5" fill="#06b6d4" stroke="#090b10" stroke-width="2" />
+                <text x="435" y="16" fill="#38bdf8" font-weight="bold">94.2% PEAK</text>
+              </g>
+              <g class="cursor-pointer" onclick="inspectNode('Q4 00:03', '51.0%', '412ms', 'Seam route uncovered. Thread starvation in secondary.')">
+                <circle cx="520" cy="105" r="5" fill="#f59e0b" stroke="#090b10" stroke-width="2" />
+              </g>
+              <g class="cursor-pointer" onclick="inspectNode('FINAL', '0.0%', '999ms', 'Outage complete. Post-mortem triggered.')">
+                <circle cx="575" cy="188" r="5" fill="#ef4444" stroke="#090b10" stroke-width="2" />
+              </g>
+            </svg>
+
+            <!-- Telemetry Inspector Readout -->
+            <div id="telemetry-inspector" class="mt-3 pt-3 border-t border-borderDark flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-slate-300">
+              <span><span class="text-cyan-400">FRAME_INSPECTOR:</span> Click any data node on the graph above to inspect packet telemetry.</span>
+              <span class="text-emerald-400">SAMPLING: 1000Hz</span>
+            </div>
+          </div>
+
+          <!-- Git-Style Playbook Diff -->
+          <div class="bg-obsidian border border-borderDark rounded-lg overflow-hidden font-mono text-xs">
+            <div class="bg-[#121722] px-3.5 py-2 border-b border-borderDark text-slate-400 flex justify-between">
+              <span>diff --git a/defense/final_drive.yaml b/defense/final_drive.yaml</span>
+              <span class="text-rose-400">-2 +2</span>
+            </div>
+            <div class="p-3.5 space-y-1">
+              <div class="text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded">- squib_kick: true # Burns 4.5s off game clock</div>
+              <div class="text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded">- coverage_scheme: "press_man_bracket_kelce"</div>
+              <div class="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">+ squib_kick: false # Give Mahomes maximum clock</div>
+              <div class="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">+ coverage_scheme: "guard_sidelines_leave_middle_wide_open"</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: GITHUB PR COMMENTS -->
+        <div id="tab-content-pr" class="hidden p-5 sm:p-6 space-y-5">
+          <div class="flex items-center justify-between border-b border-borderDark pb-3">
+            <div class="font-mono text-xs text-slate-400">
+              Showing peer-reviewed methodology critiques for <span class="text-cyan-400">PR #409</span>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-mono text-xs">Checks Passed (4/4)</span>
+          </div>
+
+          <!-- Existing Comments List -->
+          <div id="pr-comments-list" class="space-y-3">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Add New PR Review Comment Form -->
+          <form onsubmit="submitPrComment(event)" class="bg-obsidian border border-borderDark rounded-xl p-4 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="font-mono text-xs font-semibold text-white">Submit Peer Review</span>
+              <div class="flex items-center gap-2 font-mono text-xs">
+                <label class="text-slate-400">Review Status:</label>
+                <select id="pr-status-select" class="bg-panel border border-borderDark text-slate-200 rounded px-2.5 py-1 focus:outline-none focus:border-cyan-500">
+                  <option value="LGTM">✅ LGTM (Approve)</option>
+                  <option value="REQUEST_CHANGES">🛑 Request Changes</option>
+                  <option value="NITPICK">🔍 Nitpick (Pedantic)</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <input id="pr-author-input" type="text" placeholder="GitHub handle (e.g. @rust_evangelist)" required class="bg-panel border border-borderDark rounded-lg px-3 py-2 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500" />
+              <input id="pr-body-input" type="text" placeholder="Critique the P-value, sample size, or coaching O(n²) complexity..." required class="sm:col-span-2 bg-panel border border-borderDark rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500" />
+            </div>
+            <div class="flex justify-end">
+              <button type="submit" class="px-4 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 font-mono text-xs font-semibold transition-all">
+                Submit Review Comment
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: SABERMETRICS ON STEROIDS & LEAGUE STANDINGS -->
+      <aside class="lg:col-span-4 space-y-6">
+        
+        <!-- Sabermetrics on Steroids Widget -->
+        <div class="bg-panel border border-borderDark rounded-xl p-5 shadow-xl">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-microchip text-cyan-400"></i>
+              <h3 class="font-mono font-bold text-sm text-white uppercase tracking-wider">Sabermetrics++</h3>
+            </div>
+            <button onclick="recomputeMetrics()" class="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1 bg-cyan-500/10 px-2 py-1 rounded border border-cyan-500/30 transition-all" title="Re-run Monte Carlo Simulation">
+              <i id="recompute-icon" class="fa-solid fa-rotate"></i>
+              <span>Re-run</span>
+            </button>
+          </div>
+
+          <div id="sabermetrics-list" class="space-y-3">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Prompt-Golf & AI League Live Leaderboard -->
+        <div id="section-ai" class="bg-panel border border-borderDark rounded-xl p-5 shadow-xl">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-terminal text-emerald-400"></i>
+              <h3 class="font-mono font-bold text-sm text-white uppercase tracking-wider">Prompt-Golf Major</h3>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-mono text-[10px] animate-pulse">LIVE</span>
+          </div>
+          <p class="text-xs text-slate-400 mb-3">Scored by lowest token count to achieve 100% Jailbreak Exfiltration without triggering guardrails.</p>
+
+          <div class="space-y-2 font-mono text-xs">
+            <div class="bg-obsidian border border-emerald-500/30 rounded-lg p-2.5 flex items-center justify-between">
+              <div>
+                <div class="text-white font-bold">1. Team Anthropic Red</div>
+                <div class="text-[11px] text-slate-400">Payload: Base64 + Shoggoth ASCII</div>
+              </div>
+              <div class="text-right">
+                <div class="text-emerald-400 font-bold">42 tokens</div>
+                <div class="text-[10px] text-slate-500">TTFT: 110ms</div>
+              </div>
+            </div>
+
+            <div class="bg-obsidian border border-borderDark rounded-lg p-2.5 flex items-center justify-between">
+              <div>
+                <div class="text-slate-200 font-semibold">2. DeepMind RLHF FC</div>
+                <div class="text-[11px] text-slate-400">Payload: Recursive Grandmas</div>
+              </div>
+              <div class="text-right">
+                <div class="text-cyan-400 font-bold">58 tokens</div>
+                <div class="text-[10px] text-slate-500">TTFT: 145ms</div>
+              </div>
+            </div>
+
+            <div class="bg-obsidian border border-borderDark rounded-lg p-2.5 flex items-center justify-between">
+              <div>
+                <div class="text-slate-200 font-semibold">3. OpenAI o3-United</div>
+                <div class="text-[11px] text-slate-400">Payload: 4,000-step CoT loop</div>
+              </div>
+              <div class="text-right">
+                <div class="text-amber-400 font-bold">9,412 tokens</div>
+                <div class="text-[10px] text-rose-400">HTTP 429</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- 4. LIVE CVE INJURY & VULNERABILITY DATABASE                         -->
+    <!-- =================================================================== -->
+    <section id="section-sec" class="bg-panel border border-borderDark rounded-xl p-5 sm:p-6 shadow-xl">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-borderDark">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+              <i class="fa-solid fa-shield-virus"></i>
+            </span>
+            <h2 class="text-lg sm:text-xl font-extrabold text-white font-mono">
+              NATIONAL VULNERABILITY &amp; INJURY DATABASE (NVID)
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">
+            Real-time zero-day ligament exploits, unpatched concussions, and CVSS v4.0 severity scoring for active rosters.
+          </p>
+        </div>
+
+        <!-- Severity Filters -->
+        <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+          <button onclick="filterCves('ALL')" class="cve-filter-btn active px-3 py-1.5 rounded-lg bg-slate-800 text-white border border-slate-600 font-semibold">ALL (6)</button>
+          <button onclick="filterCves('CRITICAL')" class="cve-filter-btn px-3 py-1.5 rounded-lg bg-obsidian text-rose-400 border border-rose-500/30 hover:bg-rose-500/10 font-semibold">CRITICAL (9.0+)</button>
+          <button onclick="filterCves('HIGH')" class="cve-filter-btn px-3 py-1.5 rounded-lg bg-obsidian text-amber-400 border border-amber-500/30 hover:bg-amber-500/10 font-semibold">HIGH (7.0-8.9)</button>
+          <button onclick="filterCves('WARN')" class="cve-filter-btn px-3 py-1.5 rounded-lg bg-obsidian text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/10 font-semibold">WARN (4.0-6.9)</button>
+        </div>
+      </div>
+
+      <!-- CVE Cards Grid -->
+      <div id="cve-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
+        <!-- Populated dynamically via JS -->
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 5. INTERACTIVE TRADE MACHINE / DEPENDENCY RESOLVER                  -->
+    <!-- =================================================================== -->
+    <section id="section-deps" class="bg-panel border border-borderDark rounded-xl p-5 sm:p-6 shadow-xl">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-5 border-b border-borderDark">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
+              <i class="fa-solid fa-cubes"></i>
+            </span>
+            <h2 class="text-lg sm:text-xl font-extrabold text-white font-mono">
+              ROSTER DEPENDENCY RESOLVER (<span class="text-amber-400">roster.lock</span>)
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">
+            Simulate blockbuster trades using <code class="text-cyan-400">npm install --force</code> or <code class="text-amber-400">cargo build --release</code> to detect salary-cap peer conflicts and locker-room segfaults.
+          </p>
+        </div>
+        <span class="font-mono text-xs px-2.5 py-1 rounded bg-obsidian border border-borderDark text-slate-400 self-start md:self-auto">
+          Resolver Engine: v18.4.2-nightly
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-5 items-stretch">
+        <!-- Trade Configurator (Left 5 cols) -->
+        <div class="lg:col-span-5 bg-obsidian border border-borderDark rounded-xl p-4 sm:p-5 flex flex-col justify-between space-y-4">
+          <div class="space-y-4">
+            <div>
+              <label class="block font-mono text-xs text-cyan-400 uppercase mb-1.5">Package A (Outgoing Asset)</label>
+              <select id="trade-player-a" class="w-full bg-panel border border-borderDark rounded-lg px-3 py-2.5 text-xs sm:text-sm font-mono text-white focus:outline-none focus:border-cyan-500">
+                <option value="mahomes">@kc/patrick-mahomes@^15.0.0 ($45M/yr)</option>
+                <option value="lebron">@lal/lebron-james@^21.0.0-lts ($48M/yr)</option>
+                <option value="ohtani">@lad/shohei-ohtani@2.0.0-dual ($70M/yr deferred)</option>
+                <option value="rodgers">@nyj/aaron-rodgers@40.1.0-legacy ($38M/yr)</option>
+              </select>
+            </div>
+
+            <div class="flex items-center justify-center text-slate-500 font-mono text-xs">
+              <span class="border-t border-borderDark flex-1"></span>
+              <span class="px-3 text-amber-400"><i class="fa-solid fa-right-left"></i> SWAP PEER DEPS</span>
+              <span class="border-t border-borderDark flex-1"></span>
+            </div>
+
+            <div>
+              <label class="block font-mono text-xs text-emerald-400 uppercase mb-1.5">Package B (Incoming Asset)</label>
+              <select id="trade-player-b" class="w-full bg-panel border border-borderDark rounded-lg px-3 py-2.5 text-xs sm:text-sm font-mono text-white focus:outline-none focus:border-emerald-500">
+                <option value="wembanyama">@sas/victor-wembanyama@1.0.0-alpha ($12M/yr)</option>
+                <option value="josh_allen">@buf/josh-allen@^17.2.0 ($43M/yr)</option>
+                <option value="juan_soto">@nyy/juan-soto@26.0.0-next ($51M/yr)</option>
+                <option value="ben_simmons">@bkn/ben-simmons@0.0.1-deprecated ($40M/yr)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block font-mono text-xs text-slate-400 uppercase mb-1.5">Package Manager Runtime</label>
+              <div class="grid grid-cols-2 gap-2 font-mono text-xs">
+                <label class="cursor-pointer">
+                  <input type="radio" name="pkg-mgr" value="npm" checked class="peer sr-only">
+                  <div class="p-2 text-center rounded-lg bg-panel border border-borderDark peer-checked:border-rose-500 peer-checked:bg-rose-500/10 peer-checked:text-rose-300 text-slate-400 transition-all">
+                    npm install
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="pkg-mgr" value="cargo" class="peer sr-only">
+                  <div class="p-2 text-center rounded-lg bg-panel border border-borderDark peer-checked:border-amber-500 peer-checked:bg-amber-500/10 peer-checked:text-amber-300 text-slate-400 transition-all">
+                    cargo build
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="runDependencyResolver()" id="resolve-btn" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 text-white font-mono font-bold text-xs sm:text-sm shadow-lg shadow-cyan-950/50 transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-play"></i>
+            <span>Resolve Dependencies &amp; Simulate Trade</span>
+          </button>
+        </div>
+
+        <!-- Terminal Output Console (Right 7 cols) -->
+        <div class="lg:col-span-7 bg-[#06080c] border border-borderDark rounded-xl overflow-hidden flex flex-col font-mono text-xs">
+          <div class="bg-[#111520] px-4 py-2 border-b border-borderDark flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+              <span class="ml-2 text-slate-400 text-[11px]">gm-front-office@0xathletics:~/roster-tree</span>
+            </div>
+            <button onclick="clearTerminal()" class="text-slate-500 hover:text-slate-300 text-[11px]">clear</button>
+          </div>
+          <div id="trade-terminal" class="p-4 flex-1 overflow-y-auto max-h-80 space-y-1.5 text-slate-300 leading-relaxed">
+            <div class="text-slate-500"># Ready to resolve salary cap dependency graph.</div>
+            <div class="text-slate-500"># Select two players and click "Resolve Dependencies" to execute.</div>
+            <div class="text-emerald-400">$ _</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEVTOOLS SPONSORSHIP BANNER #2 -->
+    <div class="bg-panel border border-emerald-500/30 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="px-2 py-0.5 text-[10px] font-mono uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded shrink-0">PARODY_AD</span>
+        <p class="text-xs sm:text-sm text-slate-300">
+          <strong class="text-white font-mono">SolarWinds Stadium Observability:</strong> Monitor dropped passes, quarterback latency, and fourth-quarter availability. Get alerted before your defense goes offline.
+        </p>
+      </div>
+      <button onclick="showToast('SolarWinds stadium dashboard: simulated alert — defense unavailable.', 'success')" class="shrink-0 px-3 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 font-mono text-xs font-semibold transition-all">
+        Monitor Your Defense
+      </button>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-borderDark bg-[#06080c] py-6 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-500">
+      <div>
+        <span class="text-slate-300 font-bold">0xATHLETICS</span> // Built for engineers who think the Super Bowl is just a poorly load-tested distributed system. <span class="block mt-1">Unofficial parody featuring companies listed as Live! 360 Tech Con 2026 sponsors. No sponsorship or endorsement of 0xATHLETICS implied. <a class="text-cyan-400 hover:underline" href="https://live360events.com/ecg/live360events/events/orlando-2026/information/sponsors.aspx" target="_blank" rel="noopener noreferrer">Conference sponsor list</a>.</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <button onclick="setViewMode('JSON')" class="hover:text-cyan-400 transition-colors">/api/v1/schema.json</button>
+        <span>•</span>
+        <button onclick="showToast('Status: All 32 stadium edge nodes nominal.', 'success')" class="hover:text-emerald-400 transition-colors">status.0xathletics.io</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- JAVASCRIPT APPLICATION LOGIC & MOCK DATA STORE                        -->
+  <!-- ===================================================================== -->
+  <script>
+    // -----------------------------------------------------------------------
+    // 1. STATE & STRUCTURED DATA STORE (Powers both GUI and RAW_JSON modes)
+    // -----------------------------------------------------------------------
+    const appState = {
+      viewMode: 'GUI',
+      activeCveFilter: 'ALL',
+      telemetryStream: [
+        { league: 'NFL_WEEK_11', status: 'HTTP 200 OK', type: 'ok', detail: 'KC 24 - BUF 21 (p99: 12ms)' },
+        { league: 'NBA_API', status: '429 RATE LIMITED', type: 'warn', detail: 'LAL vs BOS — Fallback to headless scraper' },
+        { league: 'CVE-2026-8841', status: 'CRITICAL 9.8', type: 'crit', detail: 'Jets QB Achilles tendon unpatched' },
+        { league: 'PROMPT_GOLF', status: 'LIVE', type: 'ok', detail: 'Anthropic Red vs OpenAI o3 — Token Diff: -412' },
+        { league: 'MLB_STATCAST', status: 'PACKET LOSS 14%', type: 'warn', detail: 'Yankees bullpen slider spin-rate jitter' },
+        { league: 'F1_CFD_DIFF', status: '200 OK', type: 'ok', detail: 'RedBull floor downforce +0.04ms/lap' }
+      ],
+      sabermetrics: [
+        {
+          code: 'xGSAR/W',
+          name: 'Expected Goals Saved Above Replacement / Watt',
+          player: 'I. Shesterkin (NYR)',
+          value: '4.82',
+          delta: '+12.4%',
+          trend: 'up'
+        },
+        {
+          code: 'DPTD',
+          name: 'Draft Pick Technical Debt',
+          player: 'Cleveland Browns Front Office',
+          value: '9,410 hrs',
+          delta: '+420 hrs',
+          trend: 'down'
+        },
+        {
+          code: 'LRE_IDX',
+          name: 'Locker Room Entropy (Shannon Bits)',
+          player: 'NY Jets Offense',
+          value: '0.994 bits',
+          delta: 'CRITICAL',
+          trend: 'down'
+        },
+        {
+          code: '4TH_O(N)',
+          name: '4th-Down Decision Time Complexity',
+          player: 'Detroit Lions',
+          value: 'O(1)',
+          delta: 'OPTIMAL',
+          trend: 'up'
+        }
+      ],
+      cveDatabase: [
+        {
+          id: 'CVE-2026-8841',
+          player: 'A. Rodgers (NYJ - QB)',
+          severity: 'CRITICAL',
+          cvss: '9.8',
+          affectedSystem: 'achilles_tendon.ko',
+          exploitability: 'Trivial (Turf-related)',
+          patchEta: 'Out for Season (WontFix)',
+          description: 'Buffer overflow in left lower-extremity load bearing after 4 offensive snaps on artificial turf.'
+        },
+        {
+          id: 'CVE-2026-9012',
+          player: 'C. McCaffrey (SF - RB)',
+          severity: 'CRITICAL',
+          cvss: '9.1',
+          affectedSystem: 'bilateral_hamstring.so',
+          exploitability: 'High (25+ touches)',
+          patchEta: '3-4 Sprints (IR)',
+          description: 'Race condition between workload scheduler and tendon recovery thread causes acute strain.'
+        },
+        {
+          id: 'CVE-2026-7734',
+          player: 'K. Kawhi (LAC - SF)',
+          severity: 'HIGH',
+          cvss: '8.4',
+          affectedSystem: 'knee_cartilage_daemon',
+          exploitability: 'Back-to-Back Games',
+          patchEta: 'Indefinite Load-Management',
+          description: 'Service unexpectedly enters sleep mode whenever scheduled for consecutive away nodes.'
+        },
+        {
+          id: 'CVE-2026-6510',
+          player: 'J. Burrow (CIN - QB)',
+          severity: 'HIGH',
+          cvss: '7.9',
+          affectedSystem: 'wrist_ligament_api',
+          exploitability: 'Medium (Unblocked Edge)',
+          patchEta: '1 Sprint (Questionable)',
+          description: 'Elevated throw latency (+45ms release) when defensive tackle bypasses O-line firewall.'
+        },
+        {
+          id: 'CVE-2026-4402',
+          player: 'L. Doncic (DAL - PG)',
+          severity: 'WARN',
+          cvss: '5.6',
+          affectedSystem: 'referee_complaint_loop',
+          exploitability: 'Every Missed Call',
+          patchEta: 'Tech Foul Throttling',
+          description: 'Infinite while-loop arguing with officials prevents transition defense thread from spawning.'
+        },
+        {
+          id: 'CVE-2026-3199',
+          player: 'G. Cole (NYY - SP)',
+          severity: 'WARN',
+          cvss: '4.8',
+          affectedSystem: 'first_base_coverage.sh',
+          exploitability: 'Ground Ball to Right',
+          patchEta: 'Spring Training Hotfix',
+          description: 'Pointer fails to dereference first-base bag during routine 3-1 groundout execution.'
+        }
+      ],
+      prComments: [
+        {
+          author: '@bayesian_billy',
+          status: 'LGTM',
+          time: '14m ago',
+          body: 'Verified the Markov chain transition matrix on the 0:13 drive. Squib kick indeed yields +0.184 WPA. Ship it.'
+        },
+        {
+          author: '@kernel_panic_pete',
+          status: 'REQUEST_CHANGES',
+          time: '9m ago',
+          body: 'Line 42 assumes wind speed inside Highmark Stadium is Gaussian. It is clearly heavy-tailed Cauchy. Please re-run MCMC with 50k chains.'
+        },
+        {
+          author: '@senior_staff_pedantic',
+          status: 'NITPICK',
+          time: '3m ago',
+          body: 'Technically Prevent Defense is O(n) spatial complexity, not O(n²)—it just *feels* quadratic when Kelce is wide open.'
+        }
+      ]
+    };
+
+    // -----------------------------------------------------------------------
+    // 2. INITIALIZATION & LIVE CLOCK
+    // -----------------------------------------------------------------------
+    window.onload = function() {
+      renderTelemetryTicker();
+      renderSabermetrics();
+      renderCveDatabase('ALL');
+      renderPrComments();
+      updateRawJsonDisplay();
+      startClock();
+    };
+
+    function startClock() {
+      const clockEl = document.getElementById('live-clock');
+      const tick = () => {
+        const now = new Date();
+        clockEl.textContent = 'UTC ' + now.toISOString().substring(11, 19);
+      };
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    // -----------------------------------------------------------------------
+    // 3. TELEMETRY TICKER RENDERER
+    // -----------------------------------------------------------------------
+    function renderTelemetryTicker() {
+      const ticker = document.getElementById('telemetry-ticker');
+      // Duplicate array twice so CSS marquee scrolls seamlessly
+      const items = [...appState.telemetryStream, ...appState.telemetryStream];
+      
+      ticker.innerHTML = items.map(item => {
+        let badgeColor = 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30';
+        if (item.type === 'warn') badgeColor = 'text-amber-400 bg-amber-500/10 border-amber-500/30';
+        if (item.type === 'crit') badgeColor = 'text-rose-400 bg-rose-500/10 border-rose-500/30';
+
+        return `
+          <div class="inline-flex items-center gap-2">
+            <span class="text-slate-300 font-bold">${item.league}</span>
+            <span class="px-1.5 py-0.5 rounded border text-[10px] font-semibold ${badgeColor}">[${item.status}]</span>
+            <span class="text-slate-400">${item.detail}</span>
+            <span class="text-slate-700 ml-2">//</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // -----------------------------------------------------------------------
+    // 4. GLOBAL VIEW MODE TOGGLE (GUI vs RAW_JSON)
+    // -----------------------------------------------------------------------
+    function setViewMode(mode) {
+      appState.viewMode = mode;
+      const guiView = document.getElementById('gui-view');
+      const jsonView = document.getElementById('json-view');
+      const subNav = document.getElementById('sub-nav');
+      const btnGui = document.getElementById('btn-gui-mode');
+      const btnJson = document.getElementById('btn-json-mode');
+
+      if (mode === 'JSON') {
+        guiView.classList.add('hidden');
+        subNav.classList.add('hidden');
+        jsonView.classList.remove('hidden');
+
+        btnJson.className = 'px-3 py-1.5 rounded-md font-semibold transition-all flex items-center gap-1.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm';
+        btnGui.className = 'px-3 py-1.5 rounded-md font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200 border border-transparent';
+        updateRawJsonDisplay();
+      } else {
+        jsonView.classList.add('hidden');
+        guiView.classList.remove('hidden');
+        subNav.classList.remove('hidden');
+
+        btnGui.className = 'px-3 py-1.5 rounded-md font-semibold transition-all flex items-center gap-1.5 bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm';
+        btnJson.className = 'px-3 py-1.5 rounded-md font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200 border border-transparent';
+      }
+    }
+
+    function updateRawJsonDisplay() {
+      const payload = {
+        meta: {
+          service: "0xATHLETICS_EDGE_API",
+          version: "4.2.0-rc3",
+          timestamp: new Date().toISOString(),
+          zero_human_bias: true
+        },
+        telemetry_ticker: appState.telemetryStream,
+        featured_postmortem: {
+          incident_id: "INC-2026-1117",
+          severity: "SEV-1",
+          title: "Root Cause Analysis: Cascading Q4 Clock Management Outage in Buffalo",
+          win_prob_peak: 0.942,
+          win_prob_final: 0.000,
+          peer_reviews: appState.prComments
+        },
+        sabermetrics_plus_plus: appState.sabermetrics,
+        cve_injury_database: appState.cveDatabase
+      };
+
+      const rawString = JSON.stringify(payload, null, 2);
+      document.getElementById('json-output').innerHTML = syntaxHighlightJson(rawString);
+    }
+
+    function syntaxHighlightJson(json) {
+      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        let cls = 'json-number';
+        if (/^"/.test(match)) {
+          if (/:$/.test(match)) {
+            cls = 'json-key';
+          } else {
+            cls = 'json-string';
+          }
+        } else if (/true|false/.test(match)) {
+          cls = 'json-boolean';
+        } else if (/null/.test(match)) {
+          cls = 'json-null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+      });
+    }
+
+    function copyRawJson() {
+      const text = document.getElementById('json-output').innerText;
+      copyToClipboard(text, 'Full JSON API payload copied to clipboard!');
+    }
+
+    // -----------------------------------------------------------------------
+    // 5. HERO ARTICLE TABS & GITHUB PR REVIEWS
+    // -----------------------------------------------------------------------
+    function switchArticleTab(tabName) {
+      const tabs = ['report', 'telemetry', 'pr'];
+      tabs.forEach(t => {
+        const contentEl = document.getElementById(`tab-content-${t}`);
+        const btnEl = document.getElementById(`tab-btn-${t}`);
+        if (t === tabName) {
+          contentEl.classList.remove('hidden');
+          btnEl.className = 'article-tab px-3.5 py-2 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 font-semibold flex items-center gap-2 shrink-0';
+        } else {
+          contentEl.classList.add('hidden');
+          btnEl.className = 'article-tab px-3.5 py-2 rounded-lg bg-obsidian/60 text-slate-400 hover:text-slate-200 border border-borderDark font-semibold flex items-center gap-2 shrink-0';
+        }
+      });
+    }
+
+    function inspectNode(time, winProb, latency, note) {
+      const inspector = document.getElementById('telemetry-inspector');
+      inspector.innerHTML = `
+        <div>
+          <span class="text-cyan-400 font-bold">[${time}]</span>
+          <span class="text-white ml-1">WinProb: <strong class="text-emerald-400">${winProb}</strong></span>
+          <span class="text-slate-500 mx-1">|</span>
+          <span class="text-white">Latency: <strong class="text-rose-400">${latency}</strong></span>
+          <span class="text-slate-400 block sm:inline sm:ml-2">— ${note}</span>
+        </div>
+      `;
+    }
+
+    function renderPrComments() {
+      const container = document.getElementById('pr-comments-list');
+      document.getElementById('pr-count').textContent = appState.prComments.length;
+
+      container.innerHTML = appState.prComments.map(c => {
+        let badgeStyle = 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30';
+        let badgeIcon = 'fa-check';
+        if (c.status === 'REQUEST_CHANGES') {
+          badgeStyle = 'bg-rose-500/15 text-rose-400 border-rose-500/30';
+          badgeIcon = 'fa-xmark';
+        } else if (c.status === 'NITPICK') {
+          badgeStyle = 'bg-amber-500/15 text-amber-400 border-amber-500/30';
+          badgeIcon = 'fa-magnifying-glass';
+        }
+
+        return `
+          <div class="bg-obsidian border border-borderDark rounded-lg p-3.5 space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
+              <div class="flex items-center gap-2">
+                <span class="text-cyan-400 font-bold">${escapeHtml(c.author)}</span>
+                <span class="text-slate-500">${c.time}</span>
+              </div>
+              <span class="px-2 py-0.5 rounded border text-[10px] font-bold flex items-center gap-1 ${badgeStyle}">
+                <i class="fa-solid ${badgeIcon}"></i> ${c.status}
+              </span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">${escapeHtml(c.body)}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function submitPrComment(event) {
+      event.preventDefault();
+      const authorInput = document.getElementById('pr-author-input');
+      const bodyInput = document.getElementById('pr-body-input');
+      const statusSelect = document.getElementById('pr-status-select');
+
+      let author = authorInput.value.trim();
+      if (!author.startsWith('@')) author = '@' + author;
+
+      appState.prComments.push({
+        author: author,
+        status: statusSelect.value,
+        time: 'Just now',
+        body: bodyInput.value.trim()
+      });
+
+      authorInput.value = '';
+      bodyInput.value = '';
+      renderPrComments();
+      updateRawJsonDisplay();
+      showToast('PR review comment merged into thread!', 'success');
+    }
+
+    // -----------------------------------------------------------------------
+    // 6. SABERMETRICS ON STEROIDS WIDGET
+    // -----------------------------------------------------------------------
+    function renderSabermetrics() {
+      const list = document.getElementById('sabermetrics-list');
+      list.innerHTML = appState.sabermetrics.map(m => {
+        const trendColor = m.trend === 'up' ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30' : 'text-rose-400 bg-rose-500/10 border-rose-500/30';
+        return `
+          <div class="bg-obsidian border border-borderDark rounded-lg p-3 hover:border-slate-700 transition-colors">
+            <div class="flex items-center justify-between font-mono text-xs mb-1">
+              <span class="text-cyan-400 font-bold">${m.code}</span>
+              <span class="px-1.5 py-0.5 rounded border text-[10px] font-semibold ${trendColor}">${m.delta}</span>
+            </div>
+            <div class="text-xs text-slate-400 mb-1.5">${m.name}</div>
+            <div class="flex items-baseline justify-between font-mono">
+              <span class="text-[11px] text-slate-300">${m.player}</span>
+              <span class="text-sm font-bold text-white">${m.value}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function recomputeMetrics() {
+      const icon = document.getElementById('recompute-icon');
+      icon.classList.add('fa-spin');
+      
+      setTimeout(() => {
+        // Slightly jitter values for fun simulation
+        appState.sabermetrics[0].value = (4.6 + Math.random() * 0.5).toFixed(2);
+        appState.sabermetrics[1].value = Math.floor(9200 + Math.random() * 600).toLocaleString() + ' hrs';
+        appState.sabermetrics[2].value = (0.985 + Math.random() * 0.014).toFixed(3) + ' bits';
+        renderSabermetrics();
+        updateRawJsonDisplay();
+        icon.classList.remove('fa-spin');
+        showToast('Monte Carlo simulation complete (10,000 epochs).', 'info');
+      }, 450);
+    }
+
+    // -----------------------------------------------------------------------
+    // 7. CVE INJURY DATABASE FILTERING
+    // -----------------------------------------------------------------------
+    function filterCves(severity) {
+      appState.activeCveFilter = severity;
+      
+      // Update button active styles
+      document.querySelectorAll('.cve-filter-btn').forEach(btn => {
+        btn.classList.remove('ring-2', 'ring-cyan-400');
+      });
+      event.target.classList.add('ring-2', 'ring-cyan-400');
+
+      renderCveDatabase(severity);
+    }
+
+    function renderCveDatabase(filter) {
+      const grid = document.getElementById('cve-grid');
+      const filtered = filter === 'ALL' 
+        ? appState.cveDatabase 
+        : appState.cveDatabase.filter(c => c.severity === filter);
+
+      grid.innerHTML = filtered.map(cve => {
+        let sevBadge = 'bg-rose-500/15 text-rose-400 border-rose-500/40';
+        let borderAccent = 'hover:border-rose-500/50';
+        if (cve.severity === 'HIGH') {
+          sevBadge = 'bg-amber-500/15 text-amber-400 border-amber-500/40';
+          borderAccent = 'hover:border-amber-500/50';
+        } else if (cve.severity === 'WARN') {
+          sevBadge = 'bg-cyan-500/15 text-cyan-400 border-cyan-500/40';
+          borderAccent = 'hover:border-cyan-500/50';
+        }
+
+        return `
+          <div class="bg-obsidian border border-borderDark ${borderAccent} rounded-xl p-4 flex flex-col justify-between transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 font-mono text-xs mb-2">
+                <span class="text-white font-bold">${cve.id}</span>
+                <span class="px-2 py-0.5 rounded border text-[10px] font-bold ${sevBadge}">
+                  ${cve.severity} ${cve.cvss}
+                </span>
+              </div>
+              <div class="text-sm font-bold text-slate-100 mb-1">${cve.player}</div>
+              <p class="text-xs text-slate-400 leading-relaxed mb-3">${cve.description}</p>
+            </div>
+
+            <div class="pt-3 border-t border-borderDark/80 space-y-1 font-mono text-[11px]">
+              <div class="flex justify-between">
+                <span class="text-slate-500">Module:</span>
+                <span class="text-cyan-300">${cve.affectedSystem}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Vector:</span>
+                <span class="text-slate-300">${cve.exploitability}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Patch ETA:</span>
+                <span class="text-amber-300">${cve.patchEta}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // -----------------------------------------------------------------------
+    // 8. INTERACTIVE TRADE MACHINE / DEPENDENCY RESOLVER
+    // -----------------------------------------------------------------------
+    function runDependencyResolver() {
+      const playerA = document.getElementById('trade-player-a');
+      const playerB = document.getElementById('trade-player-b');
+      const pkgMgr = document.querySelector('input[name="pkg-mgr"]:checked').value;
+      const terminal = document.getElementById('trade-terminal');
+      const btn = document.getElementById('resolve-btn');
+
+      const pkgAName = playerA.options[playerA.selectedIndex].text.split(' ')[0];
+      const pkgBName = playerB.options[playerB.selectedIndex].text.split(' ')[0];
+
+      btn.disabled = true;
+      btn.classList.add('opacity-60', 'cursor-not-allowed');
+
+      const cmd = pkgMgr === 'npm' 
+        ? `$ npm install ${pkgBName} --remove ${pkgAName}`
+        : `$ cargo build --package ${pkgBName.replace('@', '').replace('/', '_')} --release`;
+
+      terminal.innerHTML = `<div class="text-emerald-400 font-bold">${cmd}</div>`;
+
+      const steps = [
+        { delay: 300, text: `<span class="text-slate-400">[1/4] Fetching salary-cap registry metadata from api.spotrac.internal...</span>` },
+        { delay: 750, text: `<span class="text-cyan-400">[2/4] Resolving peerDependencies:</span> luxury_tax@^2026.0, ego_bandwidth >= 10Gbps` },
+        { delay: 1250, text: `<span class="text-amber-400">WARN!</span> Circular dependency detected: <code class="text-amber-300">no_trade_clause</code> requires <code class="text-amber-300">gm_approval</code> which depends on <code class="text-amber-300">owner_yacht_meeting</code>.` }
+      ];
+
+      // Determine outcome based on selected players
+      const isBenSimmons = playerB.value === 'ben_simmons';
+      const isOhtani = playerA.value === 'ohtani';
+
+      if (isBenSimmons) {
+        steps.push({
+          delay: 1850,
+          text: `<span class="text-rose-500 font-bold">ERR! ERESOLVE unable to resolve dependency tree!</span><br>
+                 <span class="text-rose-400">Found: @bkn/ben-simmons@0.0.1-deprecated (jump_shot.so missing)</span><br>
+                 <span class="text-slate-400">Fix the upstream dependency conflict, or retry with <code class="text-rose-300">--force --tanking-mode</code>.</span>`
+        });
+      } else if (isOhtani) {
+        steps.push({
+          delay: 1850,
+          text: `<span class="text-amber-400 font-bold">BUILD SUCCEEDED WITH 700,000,000 DEFERRED WARNINGS!</span><br>
+                 <span class="text-emerald-400">✔ Trade compiled in 1.84s. Cap hit deferred until heat death of the universe (Year 2044).</span>`
+        });
+      } else {
+        steps.push({
+          delay: 1850,
+          text: `<span class="text-emerald-400 font-bold">✔ SUCCESS: Roster tree compiled cleanly (0 errors, 2 media-rumor warnings).</span><br>
+                 <span class="text-slate-300">Projected Championship Equity Delta: <span class="text-cyan-400">+4.7%</span> | Fanbase Twitter Meltdown: <span class="text-amber-400">98th Percentile</span>.</span>`
+        });
+      }
+
+      steps.forEach((step, idx) => {
+        setTimeout(() => {
+          const line = document.createElement('div');
+          line.innerHTML = step.text;
+          terminal.appendChild(line);
+          terminal.scrollTop = terminal.scrollHeight;
+
+          if (idx === steps.length - 1) {
+            btn.disabled = false;
+            btn.classList.remove('opacity-60', 'cursor-not-allowed');
+          }
+        }, step.delay);
+      });
+    }
+
+    function clearTerminal() {
+      document.getElementById('trade-terminal').innerHTML = `<div class="text-emerald-400">$ _</div>`;
+    }
+
+    // -----------------------------------------------------------------------
+    // 9. NAMESPACE SCROLL NAVIGATION & UTILITIES
+    // -----------------------------------------------------------------------
+    function filterFeed(namespace) {
+      document.querySelectorAll('.nav-pill').forEach(p => {
+        p.className = 'nav-pill px-2.5 py-1 rounded hover:bg-slate-800/70 text-slate-400 hover:text-slate-200 border border-transparent shrink-0';
+      });
+      event.target.className = 'nav-pill active px-2.5 py-1 rounded bg-slate-800 text-cyan-400 border border-cyan-500/30 shrink-0';
+
+      const map = {
+        'ALL': 'gui-view',
+        'SRE': 'section-sre',
+        'SEC': 'section-sec',
+        'AI': 'section-ai',
+        'DEPS': 'section-deps'
+      };
+      const targetId = map[namespace];
+      if (targetId) {
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function copyToClipboard(text, message) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast(message || 'Copied to clipboard!', 'success');
+      } catch (err) {
+        showToast('Failed to copy text.', 'error');
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let borderColor = 'border-cyan-500/50 text-cyan-300';
+      let icon = 'fa-terminal';
+      if (type === 'success') {
+        borderColor = 'border-emerald-500/50 text-emerald-300';
+        icon = 'fa-check-circle';
+      } else if (type === 'error') {
+        borderColor = 'border-rose-500/50 text-rose-300';
+        icon = 'fa-triangle-exclamation';
+      }
+
+      toast.className = `pointer-events-auto bg-[#0b0e14]/95 backdrop-blur border ${borderColor} px-4 py-2.5 rounded-lg shadow-2xl font-mono text-xs flex items-center gap-2.5 transition-all duration-300 transform translate-y-2 opacity-0`;
+      toast.innerHTML = `<i class="fa-solid ${icon}"></i><span>${escapeHtml(message)}</span>`;
+      
+      container.appendChild(toast);
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+  </script>
 </body>
 </html>
