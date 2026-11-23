@@ -15,6 +15,8 @@
     .brand-wordmark{display:flex;align-items:baseline;gap:.3em;white-space:nowrap}
     .brand-wordmark>span{color:#fff}.brand-wordmark b{color:var(--red);font:inherit}
     .site-footer .brand{font-size:1.25rem}.site-footer .brand img{width:42px;height:42px}
+    .scores-label .sport-logo{width:84px;height:84px;object-fit:contain}
+    .event-bar .sport-logo{width:56px;height:56px;object-fit:contain}
     @media(max-width:560px){.brand{gap:11px}.brand img{width:46px;height:46px}.brand-wordmark{display:block}.brand-wordmark b{display:block}.site-footer .brand-wordmark{display:flex}.site-footer .brand-wordmark b{display:inline}}
   </style>
   <script src="script.js" defer></script>
@@ -38,7 +40,7 @@
 
   <main id="main-content">
     <section id="scores" class="score-strip" aria-label="Latest Dodge-ball scores">
-      <div class="scores-label"><img src="assets/esn-bolt.svg" alt=""><strong>Latest<br>Scores</strong></div>
+      <div class="scores-label"><img class="sport-logo" src="assets/dodge-ball-logo.png" alt=""><strong>Dodge-ball<br>Latest Scores</strong></div>
       <article class="score-card">
         <p>Quarterfinal · Final / Day 2</p>
         <div><span>Cleveland Crankshafts</span><strong>3</strong></div>
@@ -59,7 +61,7 @@
     </section>
 
     <div class="page-wrap" id="top">
-      <div class="event-bar"><img src="assets/esn-bolt.svg" alt=""><strong>Dodge-ball Final Eight</strong><span>Day 2 · Quarterfinals</span></div>
+      <div class="event-bar"><img class="sport-logo" src="assets/dodge-ball-logo.png" alt=""><strong>Dodge-ball Final Eight</strong><span>Day 2 · Quarterfinals</span></div>
       <div class="lead-layout">
         <article id="top-stories" class="lead-story">
           <div class="field-art">
