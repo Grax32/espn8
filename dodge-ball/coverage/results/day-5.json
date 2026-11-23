@@ -1,0 +1,14 @@
+{
+  "tournament": "Dodge-ball Final Eight",
+  "day": 5,
+  "dayName": "Thursday",
+  "round": "Semifinal",
+  "completedGames": [
+    {"game": 1, "round": "Quarterfinal", "winner": "Detroit Detonators", "loser": "Baltimore Boltcutters", "score": "4-2", "coverageNote": "Detroit controlled the center field to open the tournament."},
+    {"game": 2, "round": "Quarterfinal", "winner": "Cleveland Crankshafts", "loser": "Phoenix Powerplays", "score": "3-2", "coverageNote": "Cleveland converted a late rebound to advance."},
+    {"game": 3, "round": "Quarterfinal", "winner": "Charlotte Chargers", "loser": "Seattle Slipstreams", "score": "5-3", "coverageNote": "Charlotte's transition attack broke the game open."},
+    {"game": 4, "round": "Quarterfinal", "winner": "Chicago Chicanes", "loser": "Austin Afterburners", "score": "3-1", "coverageNote": "Chicago's compact defense held firm in the final minutes."},
+    {"game": 5, "round": "Semifinal", "winner": "Detroit Detonators", "loser": "Cleveland Crankshafts", "score": "4-3", "coverageNote": "Detroit scored the deciding goal in extra time."}
+  ],
+  "eliminatedTeams": ["Baltimore Boltcutters", "Phoenix Powerplays", "Seattle Slipstreams", "Austin Afterburners", "Cleveland Crankshafts"]
+}

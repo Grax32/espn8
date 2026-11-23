@@ -1,0 +1,17 @@
+{
+  "tournament": "Dodge-ball Final Eight",
+  "day": 1,
+  "dayName": "Sunday",
+  "round": "Quarterfinal",
+  "completedGames": [
+    {
+      "game": 1,
+      "round": "Quarterfinal",
+      "winner": "Detroit Detonators",
+      "loser": "Baltimore Boltcutters",
+      "score": "4-2",
+      "coverageNote": "Detroit controlled the center field to open the tournament."
+    }
+  ],
+  "eliminatedTeams": ["Baltimore Boltcutters"]
+}

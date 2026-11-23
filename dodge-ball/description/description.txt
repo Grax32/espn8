@@ -1,0 +1,20 @@
+# Dodge-ball
+
+Not dodgeball. It has a dash.
+
+Dodge-ball is a five-versus-five vehicle sport played with Dodge cars and
+Dodge-badged trucks on an
+expanded soccer field. Teams use controlled contact with a 10-foot regulation
+ball to drive it into an opposing goal that spans the full width of the field.
+There is no goalie: every car attacks, defends, and creates space.
+
+The game follows the broad rhythm of soccer—kickoff, open play, goals, halves,
+and stoppage time—but replaces footwork with vehicle positioning and ball
+control. Any Dodge car or Dodge-badged truck from any year may compete when it
+meets event safety and inspection requirements.
+
+The sport rewards pace, turning skill, coordinated formations, and smart use of
+the expanded field. Teams must keep the giant ball moving while preventing a
+clear lane to their own full-width goal.
+
+See the rule summary and detailed rules in the `rules` folder.

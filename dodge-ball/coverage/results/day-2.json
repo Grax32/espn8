@@ -1,0 +1,25 @@
+{
+  "tournament": "Dodge-ball Final Eight",
+  "day": 2,
+  "dayName": "Monday",
+  "round": "Quarterfinal",
+  "completedGames": [
+    {
+      "game": 1,
+      "round": "Quarterfinal",
+      "winner": "Detroit Detonators",
+      "loser": "Baltimore Boltcutters",
+      "score": "4-2",
+      "coverageNote": "Detroit controlled the center field to open the tournament."
+    },
+    {
+      "game": 2,
+      "round": "Quarterfinal",
+      "winner": "Cleveland Crankshafts",
+      "loser": "Phoenix Powerplays",
+      "score": "3-2",
+      "coverageNote": "Cleveland converted a late rebound to advance."
+    }
+  ],
+  "eliminatedTeams": ["Baltimore Boltcutters", "Phoenix Powerplays"]
+}
