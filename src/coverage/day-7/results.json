@@ -2,6 +2,7 @@
   "tournament": "Dodge-ball Final Eight",
   "day": 7,
   "dayName": "Saturday",
+  "headline": "Detroit Claims the Final Eight.",
   "round": "Championship",
   "completedGames": [
     {"game": 1, "round": "Quarterfinal", "winner": "Detroit Detonators", "loser": "Baltimore Boltcutters", "score": "4-2", "coverageNote": "Detroit controlled the center field to open the tournament."},

@@ -1,7 +1,8 @@
 {
   "tournament": "Dodge-ball Final Eight",
-  "day": 2,
-  "dayName": "Monday",
+  "day": 3,
+  "dayName": "Tuesday",
+  "headline": "Charlotte Turns Up the Transition.",
   "round": "Quarterfinal",
   "completedGames": [
     {
@@ -19,7 +20,15 @@
       "loser": "Phoenix Powerplays",
       "score": "3-2",
       "coverageNote": "Cleveland converted a late rebound to advance."
+    },
+    {
+      "game": 3,
+      "round": "Quarterfinal",
+      "winner": "Charlotte Chargers",
+      "loser": "Seattle Slipstreams",
+      "score": "5-3",
+      "coverageNote": "Charlotte's transition attack broke the game open."
     }
   ],
-  "eliminatedTeams": ["Baltimore Boltcutters", "Phoenix Powerplays"]
+  "eliminatedTeams": ["Baltimore Boltcutters", "Phoenix Powerplays", "Seattle Slipstreams"]
 }

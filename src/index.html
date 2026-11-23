@@ -41,55 +41,47 @@
   <main id="main-content">
     <section id="scores" class="score-strip" aria-label="Latest Dodge-ball scores">
       <div class="scores-label"><img class="sport-logo" src="assets/dodge-ball-logo.png" alt=""><strong>Dodge-ball<br>Latest Scores</strong></div>
-      <article class="score-card">
-        <p>Quarterfinal · Final / Day 2</p>
-        <div><span>Cleveland Crankshafts</span><strong>3</strong></div>
-        <div><span>Phoenix Powerplays</span><strong>2</strong></div>
-        <a href="#cleveland-recap">Game recap</a>
+      <article id="latest-score" class="score-card">
+        <p>Loading results…</p>
+        <div><span>—</span><strong>—</strong></div>
+        <div><span>—</span><strong>—</strong></div>
+        <a href="#daily-recap">Game recap</a>
       </article>
-      <article class="score-card">
-        <p>Quarterfinal · Final / Day 1</p>
-        <div><span>Detroit Detonators</span><strong>4</strong></div>
-        <div><span>Baltimore Boltcutters</span><strong>2</strong></div>
-        <a href="#detroit-recap">Game recap</a>
+      <article id="previous-score" class="score-card">
+        <p>Loading results…</p>
+        <div><span>—</span><strong>—</strong></div>
+        <div><span>—</span><strong>—</strong></div>
+        <a href="#daily-recap">Game recap</a>
       </article>
       <div class="tournament-progress">
         <p>Tournament Progress</p>
-        <strong>6 teams remain</strong>
-        <span>2 of 7 games completed</span>
+        <strong id="teams-remaining">— teams remain</strong>
+        <span id="games-completed">— of 7 games completed</span>
       </div>
     </section>
 
     <div class="page-wrap" id="top">
-      <div class="event-bar"><img class="sport-logo" src="assets/dodge-ball-logo.png" alt=""><strong>Dodge-ball Final Eight</strong><span>Day 2 · Quarterfinals</span></div>
+      <div class="event-bar"><img class="sport-logo" src="assets/dodge-ball-logo.png" alt=""><strong id="tournament-name">Dodge-ball Final Eight</strong><span id="event-day">Loading coverage…</span></div>
       <div class="lead-layout">
         <article id="top-stories" class="lead-story">
           <div class="field-art">
-            <img src="assets/dodge-ball-field-sideline-drivers.png" alt="Sideline view of three Dodge vehicles, each with a driver, converging on a large yellow ball on a Dodge-ball field">
-            <span class="art-label">Dodge-ball / Field study</span>
+            <img id="daily-image" src="coverage/day-1/main-image.png" alt="Dodge-ball Final Eight coverage">
+            <span id="image-label" class="art-label">Dodge-ball / Daily coverage</span>
           </div>
           <div class="lead-copy">
-            <p class="kicker">Dodge-ball · Quarterfinal Report</p>
-            <h1>Cleveland Finds the Finish.</h1>
-            <p class="dek">A late rebound. A 3–2 win. The Crankshafts advance from a tight quarterfinal against Phoenix.</p>
-            <a class="primary-link" href="#cleveland-recap">Read the game report</a>
+            <p id="lead-kicker" class="kicker">Dodge-ball · Daily report</p>
+            <h1 id="daily-headline">Loading today’s headline…</h1>
+            <p id="lead-dek" class="dek">Loading the latest Dodge-ball Final Eight results.</p>
+            <a class="primary-link" href="#daily-recap">Read the game report</a>
           </div>
         </article>
 
         <aside id="teams" class="team-records" aria-labelledby="record-heading">
           <h2 id="record-heading">Team Records</h2>
-          <p class="record-subtitle">Tournament W–L · Through Day 2</p>
-          <ol>
-            <li><span>Detroit Detonators</span><strong>1–0</strong></li>
-            <li><span>Cleveland Crankshafts</span><strong>1–0</strong></li>
-            <li><span>Charlotte Chargers</span><strong>0–0</strong></li>
-            <li><span>Chicago Chicanes</span><strong>0–0</strong></li>
-            <li><span>Austin Afterburners</span><strong>0–0</strong></li>
-            <li><span>Seattle Slipstreams</span><strong>0–0</strong></li>
-            <li><span>Phoenix Powerplays</span><strong>0–1</strong></li>
-            <li><span>Baltimore Boltcutters</span><strong>0–1</strong></li>
+          <p id="record-subtitle" class="record-subtitle">Tournament W–L</p>
+          <ol id="team-record-list">
           </ol>
-          <p class="eliminated">Phoenix and Baltimore eliminated.</p>
+          <p id="eliminated-teams" class="eliminated"></p>
         </aside>
       </div>
 
@@ -114,19 +106,19 @@
         </article>
       </section>
 
-      <section id="cleveland-recap" class="recap" aria-labelledby="recap-heading">
+      <section id="daily-recap" class="recap" aria-labelledby="recap-heading">
         <div>
-          <p class="kicker">Day 2 Recap</p>
-          <h2 id="recap-heading">A rebound changes the bracket.</h2>
+          <p id="recap-kicker" class="kicker">Daily recap</p>
+          <h2 id="recap-heading">Loading today’s recap.</h2>
         </div>
-        <p>Cleveland turned a late loose ball into the deciding goal, taking Phoenix 3–2 and a place in the semifinal. The Final Eight continues with six teams still in contention.</p>
+        <p id="recap-copy">Loading the latest results.</p>
       </section>
     </div>
   </main>
   <footer class="site-footer">
     <a class="brand" href="#top" aria-label="Eccentric Sports News home"><img src="assets/esn-duck-pads.png" alt="" width="42" height="42"><span class="brand-wordmark"><span>Eccentric Sports</span><b>News</b></span></a>
     <p>Unusual sports. Clear coverage.</p>
-    <span>Final Eight · Day 2 snapshot</span>
+    <span id="footer-day">Final Eight daily snapshot</span>
   </footer>
 </body>
 </html>
