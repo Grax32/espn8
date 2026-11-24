@@ -468,30 +468,95 @@ a:focus-visible,button:focus-visible {
   margin:11px 0
 }
 
-.team-records ol {
-  list-style:none;
-  padding:0;
-  margin:0
-}
-
-.team-records li {
-  display:flex;
-  justify-content:space-between;
-  gap:18px;
-  border-bottom:1px solid var(--line);
-  padding:13px 0;
-  font-size:.86rem
-}
-
-.team-records li strong {
-  color:var(--yellow);
-  font-variant-numeric:tabular-nums
-}
-
 .eliminated {
   margin:15px 0 0;
   color:var(--muted);
   font-size:.73rem
+}
+
+.playoff-bracket {
+  display:grid;
+  grid-template-columns:1.25fr 1.1fr 1fr;
+  gap:10px;
+  margin-top:19px;
+  overflow-x:auto
+}
+
+.bracket-round {
+  display:flex;
+  min-width:105px;
+  flex-direction:column;
+  gap:10px
+}
+
+.bracket-round h3 {
+  min-height:22px;
+  margin:0;
+  color:var(--blue);
+  font-size:.59rem;
+  letter-spacing:.08em;
+  text-transform:uppercase
+}
+
+.bracket-round--semifinal {
+  justify-content:space-around
+}
+
+.bracket-round--championship {
+  justify-content:center
+}
+
+.bracket-game {
+  padding:7px 8px;
+  border:1px solid var(--line);
+  background:rgba(3,16,35,.42)
+}
+
+.bracket-game.is-final {
+  border-color:rgba(255,212,0,.5)
+}
+
+.bracket-game__meta {
+  margin:0 0 5px;
+  color:var(--muted);
+  font-size:.56rem;
+  letter-spacing:.04em;
+  text-transform:uppercase
+}
+
+.bracket-game__team {
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:6px;
+  padding:3px 0;
+  font-size:.66rem;
+  line-height:1.15
+}
+
+.bracket-game__team span {
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+
+.bracket-game__team strong {
+  color:var(--muted);
+  font-variant-numeric:tabular-nums
+}
+
+.bracket-game__team.is-winner {
+  color:#fff;
+  font-weight:800
+}
+
+.bracket-game__team.is-winner strong {
+  color:var(--yellow)
+}
+
+.bracket-game__team.is-eliminated {
+  color:#8294a8
 }
 
 .story-grid {
@@ -604,11 +669,8 @@ a:focus-visible,button:focus-visible {
     grid-column:1/-1
   }
 
-  .team-records ol {
-    grid-column:1/-1;
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:0 25px
+  .team-records .playoff-bracket {
+    grid-column:1/-1
   }
 
   .story-grid {
@@ -743,10 +805,6 @@ a:focus-visible,button:focus-visible {
     display:block
   }
 
-  .team-records ol {
-    display:block
-  }
-
   .story-grid {
     grid-template-columns:1fr
   }
@@ -867,6 +925,16 @@ a:focus-visible,button:focus-visible {
   font-weight:800;
   letter-spacing:.13em;
   text-transform:uppercase
+}
+
+.about-sport-dialog__eyebrow {
+  display:inline-block;
+  padding:8px 11px;
+  background:var(--yellow);
+  color:var(--navy);
+  font-size:.84rem;
+  letter-spacing:.1em;
+  box-shadow:5px 5px 0 var(--red)
 }
 
 .about-sport-dialog h2 {

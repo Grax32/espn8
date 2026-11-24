@@ -77,26 +77,58 @@ function renderScoreCard(card, game, day) {
   rows[1].querySelector('strong').textContent = loserScore;
 }
 
-function renderTeamRecords(results) {
-  const records = new Map(teams.map(team => [team, { wins: 0, losses: 0 }]));
-  results.completedGames.forEach(game => {
-    records.get(game.winner).wins += 1;
-    records.get(game.loser).losses += 1;
+function renderTournamentBracket(results, day) {
+  const bracket = document.querySelector('#playoff-bracket');
+  const rounds = [
+    { name: 'Quarterfinals', className: 'quarterfinal' },
+    { name: 'Semifinals', className: 'semifinal' },
+    { name: 'Cup', className: 'championship' }
+  ];
+  const completedGames = new Map(results.completedGames.map(game => [game.game, game]));
+  const roundElements = rounds.map(round => {
+    const column = document.createElement('section');
+    column.className = `bracket-round bracket-round--${round.className}`;
+    const label = document.createElement('h3');
+    label.textContent = round.name;
+    column.append(label);
+    return column;
   });
 
-  const standings = [...records.entries()].sort(([, a], [, b]) =>
-    b.wins - a.wins || a.losses - b.losses
-  );
-  const list = document.querySelector('#team-record-list');
-  list.replaceChildren(...standings.map(([team, record]) => {
-    const item = document.createElement('li');
-    const name = document.createElement('span');
-    const score = document.createElement('strong');
-    name.textContent = team;
-    score.textContent = `${record.wins}–${record.losses}`;
-    item.append(name, score);
-    return item;
-  }));
+  tournamentSchedule.forEach(matchup => {
+    const game = completedGames.get(matchup.day);
+    const column = roundElements.find(element => element.classList.contains(`bracket-round--${matchup.round.toLowerCase()}`));
+    const card = document.createElement('div');
+    card.className = 'bracket-game';
+    if (game) card.classList.add('is-final');
+
+    const meta = document.createElement('p');
+    meta.className = 'bracket-game__meta';
+    meta.textContent = game ? `Final · ${game.score}` : `Day ${matchup.day}`;
+    card.append(meta);
+
+    matchup.teams.forEach(team => {
+      const teamRow = document.createElement('div');
+      teamRow.className = 'bracket-game__team';
+      const teamName = document.createElement('span');
+      const score = document.createElement('strong');
+      const isWinner = game?.winner === team;
+      const isLoser = game?.loser === team;
+      teamName.textContent = team;
+      score.textContent = game ? game.score.split('-')[isWinner ? 0 : 1] : '—';
+      if (isWinner) teamRow.classList.add('is-winner');
+      if (isLoser) teamRow.classList.add('is-eliminated');
+      teamRow.append(teamName, score);
+      card.append(teamRow);
+    });
+
+    column?.append(card);
+  });
+
+  bracket.replaceChildren(...roundElements);
+  document.querySelector('#bracket-subtitle').textContent = `Tournament path · Through Day ${day}`;
+  document.querySelector('#bracket-status').textContent = results.champion
+    ? `${results.champion} lift the cup.`
+    : `${teams.length - results.eliminatedTeams.length} teams remain in the chase.`;
 }
 
 function renderTournamentFeature(results, day) {
@@ -144,10 +176,6 @@ function renderDailyCoverage(results, day) {
   document.querySelector('#lead-dek').textContent = gameSummary;
   document.querySelector('#teams-remaining').textContent = `${teamsRemaining} teams remain`;
   document.querySelector('#games-completed').textContent = `${results.completedGames.length} of 7 games completed`;
-  document.querySelector('#record-subtitle').textContent = `Tournament W–L · Through Day ${day}`;
-  document.querySelector('#eliminated-teams').textContent = results.eliminatedTeams.length
-    ? `${results.eliminatedTeams.join(', ')} eliminated.`
-    : 'No teams eliminated.';
   document.querySelector('#recap-kicker').textContent = `Day ${day} recap`;
   document.querySelector('#recap-heading').textContent = results.headline;
   document.querySelector('#recap-copy').textContent = gameSummary;
@@ -155,7 +183,7 @@ function renderDailyCoverage(results, day) {
 
   renderScoreCard(document.querySelector('#latest-score'), latestGame, day);
   renderScoreCard(document.querySelector('#previous-score'), previousGame, day);
-  renderTeamRecords(results);
+  renderTournamentBracket(results, day);
   renderTournamentFeature(results, day);
 }
 
