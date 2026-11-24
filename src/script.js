@@ -1,7 +1,7 @@
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.site-nav');
 const aboutSportDialog = document.querySelector('#about-dodge-ball');
-const aboutSportTrigger = document.querySelector('.about-sport-trigger');
+const aboutSportTriggers = document.querySelectorAll('.about-sport-trigger');
 const aboutSportClose = document.querySelector('.dialog-close');
 
 menuButton?.addEventListener('click', () => {
@@ -18,12 +18,14 @@ navigation?.addEventListener('click', event => {
   }
 });
 
-aboutSportTrigger?.addEventListener('click', () => {
+function openAboutSportDialog() {
   navigation?.classList.remove('open');
   menuButton?.setAttribute('aria-expanded', 'false');
   if (menuButton) menuButton.textContent = 'Menu';
   aboutSportDialog?.showModal();
-});
+}
+
+aboutSportTriggers.forEach(trigger => trigger.addEventListener('click', openAboutSportDialog));
 aboutSportClose?.addEventListener('click', () => aboutSportDialog?.close());
 aboutSportDialog?.addEventListener('click', event => {
   if (event.target === aboutSportDialog) aboutSportDialog.close();
@@ -42,6 +44,15 @@ const teams = [
 
 const roundLabel = round => round === 'Championship' ? round : `${round}s`;
 const currentTournamentDay = () => new Date().getDay() + 1;
+const tournamentSchedule = [
+  { day: 1, dayName: 'Sunday', round: 'Quarterfinal', teams: ['Detroit Detonators', 'Baltimore Boltcutters'] },
+  { day: 2, dayName: 'Monday', round: 'Quarterfinal', teams: ['Cleveland Crankshafts', 'Phoenix Powerplays'] },
+  { day: 3, dayName: 'Tuesday', round: 'Quarterfinal', teams: ['Charlotte Chargers', 'Seattle Slipstreams'] },
+  { day: 4, dayName: 'Wednesday', round: 'Quarterfinal', teams: ['Chicago Chicanes', 'Austin Afterburners'] },
+  { day: 5, dayName: 'Thursday', round: 'Semifinal', teams: ['Detroit Detonators', 'Cleveland Crankshafts'] },
+  { day: 6, dayName: 'Friday', round: 'Semifinal', teams: ['Charlotte Chargers', 'Chicago Chicanes'] },
+  { day: 7, dayName: 'Saturday', round: 'Championship', teams: ['Detroit Detonators', 'Charlotte Chargers'] }
+];
 
 function selectedDay() {
   const requestedDay = Number.parseInt(new URLSearchParams(window.location.search).get('day'), 10);
@@ -88,6 +99,32 @@ function renderTeamRecords(results) {
   }));
 }
 
+function renderTournamentFeature(results, day) {
+  const kicker = document.querySelector('#feature-kicker');
+  const heading = document.querySelector('#feature-heading');
+  const copy = document.querySelector('#feature-copy');
+  const link = document.querySelector('#feature-link');
+  const nextMatchup = tournamentSchedule.find(matchup => matchup.day === day + 1);
+
+  if (nextMatchup) {
+    kicker.textContent = 'Next matchup';
+    heading.textContent = `${nextMatchup.teams[0]} vs. ${nextMatchup.teams[1]}`;
+    copy.textContent = `${nextMatchup.round} · ${nextMatchup.dayName}. The Final Eight resumes with another chance to advance.`;
+    link.textContent = 'Preview the matchup';
+    link.href = '#scores';
+    return;
+  }
+
+  const championship = results.completedGames.at(-1);
+  kicker.textContent = 'Special presentation';
+  heading.textContent = 'Quest for the Cup';
+  copy.textContent = championship
+    ? `${championship.winner} completed the Final Eight with a ${championship.score} championship win over ${championship.loser}. Relive the run to the cup.`
+    : 'Relive the Final Eight and the run to the cup.';
+  link.textContent = 'See the championship recap';
+  link.href = '#daily-recap';
+}
+
 function renderDailyCoverage(results, day) {
   const latestGame = results.completedGames.at(-1);
   const previousGame = results.completedGames.at(-2);
@@ -119,6 +156,7 @@ function renderDailyCoverage(results, day) {
   renderScoreCard(document.querySelector('#latest-score'), latestGame, day);
   renderScoreCard(document.querySelector('#previous-score'), previousGame, day);
   renderTeamRecords(results);
+  renderTournamentFeature(results, day);
 }
 
 async function loadDailyCoverage() {

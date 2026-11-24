@@ -86,7 +86,7 @@ a:focus-visible,button:focus-visible {
   text-decoration:none
 }
 
-.site-nav a:hover,.story-grid a:hover,.score-card a:hover {
+.site-nav a:hover,.story-grid a:hover,.story-link:hover,.score-card a:hover {
   text-decoration-color:var(--yellow);
   text-decoration-thickness:2px
 }
@@ -154,12 +154,21 @@ a:focus-visible,button:focus-visible {
   font-variant-numeric:tabular-nums
 }
 
-.score-card a,.story-grid a {
+.score-card a,.story-grid a,.story-link {
   display:inline-block;
   margin-top:10px;
   color:var(--blue);
   font-size:.85rem;
   font-weight:700
+}
+
+.story-link {
+  padding:0;
+  border:0;
+  background:transparent;
+  font-family:inherit;
+  cursor:pointer;
+  text-decoration:underline
 }
 
 .tournament-progress {
@@ -487,7 +496,7 @@ a:focus-visible,button:focus-visible {
 
 .story-grid {
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:28px;
   margin-top:38px;
   padding-top:28px;
@@ -806,7 +815,6 @@ a:focus-visible,button:focus-visible {
   background:transparent;
   color:inherit;
   font:inherit;
-  font-weight:inherit;
   cursor:pointer
 }
 
