@@ -9,16 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>
-    .brand{gap:14px;font-family:"Barlow Condensed",sans-serif;font-style:italic;font-size:clamp(1.45rem,2.4vw,2.25rem);font-weight:900;line-height:1;letter-spacing:-.015em}
-    .brand img{display:block;width:58px;height:58px;flex:0 0 auto}
-    .brand-wordmark{display:flex;align-items:baseline;gap:.3em;white-space:nowrap}
-    .brand-wordmark>span{color:#fff}.brand-wordmark b{color:var(--red);font:inherit}
-    .site-footer .brand{font-size:1.25rem}.site-footer .brand img{width:42px;height:42px}
-    .scores-label .sport-logo{width:84px;height:84px;object-fit:contain}
-    .event-bar .sport-logo{width:56px;height:56px;object-fit:contain}
-    @media(max-width:560px){.brand{gap:11px}.brand img{width:46px;height:46px}.brand-wordmark{display:block}.brand-wordmark b{display:block}.site-footer .brand-wordmark{display:flex}.site-footer .brand-wordmark b{display:inline}}
-  </style>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -32,8 +22,6 @@
     <nav id="site-nav" class="site-nav" aria-label="Main navigation">
       <a href="#top-stories">Top Stories</a>
       <a href="#scores">Scores</a>
-      <a href="#teams">Teams</a>
-      <a href="#sport">The Sport</a>
       <button class="about-sport-trigger" type="button" aria-haspopup="dialog">WTF is Dodge-ball?</button>
     </nav>
     <span class="edition">The Final Eight Edition</span>
@@ -52,7 +40,6 @@
         <p>Loading results…</p>
         <div><span>—</span><strong>—</strong></div>
         <div><span>—</span><strong>—</strong></div>
-        <a href="#daily-recap">Game recap</a>
       </article>
       <div class="tournament-progress">
         <p>Tournament Progress</p>
