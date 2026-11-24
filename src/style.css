@@ -900,7 +900,7 @@ a:focus-visible,button:focus-visible {
   display:flex;
   align-items:center;
   gap:16px;
-  margin:-clamp(24px,5vw,48px) -clamp(24px,5vw,48px) 30px;
+  margin:0 -clamp(24px,5vw,48px) 38px;
   padding:14px clamp(24px,5vw,48px);
   background:var(--yellow);
   color:var(--navy);
@@ -914,10 +914,16 @@ a:focus-visible,button:focus-visible {
 
 .major-league-banner img {
   display:block;
-  width:64px;
-  height:64px;
+  width:112px;
+  height:112px;
   object-fit:contain;
   flex:0 0 auto
+}
+
+.about-sport-dialog__close-row {
+  display:flex;
+  justify-content:flex-end;
+  height:34px
 }
 
 .about-sport-dialog__topline {
@@ -925,7 +931,8 @@ a:focus-visible,button:focus-visible {
   justify-content:space-between;
   align-items:start;
   border-bottom:1px solid var(--line);
-  margin-bottom:30px
+  margin-bottom:30px;
+  padding-left:4px
 }
 
 .dialog-close {
