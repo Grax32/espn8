@@ -53,6 +53,15 @@ const tournamentSchedule = [
   { day: 6, dayName: 'Friday', round: 'Semifinal', teams: ['Charlotte Chargers', 'Chicago Chicanes'] },
   { day: 7, dayName: 'Saturday', round: 'Championship', teams: ['Detroit Detonators', 'Charlotte Chargers'] }
 ];
+const bracketSlots = new Map([
+  [1, ['Detroit Detonators', 'Baltimore Boltcutters']],
+  [2, ['Cleveland Crankshafts', 'Phoenix Powerplays']],
+  [3, ['Charlotte Chargers', 'Seattle Slipstreams']],
+  [4, ['Chicago Chicanes', 'Austin Afterburners']],
+  [5, [{ winnerOf: 1, label: 'Winner QF 1' }, { winnerOf: 2, label: 'Winner QF 2' }]],
+  [6, [{ winnerOf: 3, label: 'Winner QF 3' }, { winnerOf: 4, label: 'Winner QF 4' }]],
+  [7, [{ winnerOf: 5, label: 'Winner SF 1' }, { winnerOf: 6, label: 'Winner SF 2' }]]
+]);
 
 function selectedDay() {
   const requestedDay = Number.parseInt(new URLSearchParams(window.location.search).get('day'), 10);
@@ -106,7 +115,12 @@ function renderTournamentBracket(results, day) {
     meta.textContent = game ? `Final · ${game.score}` : `Day ${matchup.day}`;
     card.append(meta);
 
-    matchup.teams.forEach(team => {
+    const participants = bracketSlots.get(matchup.day).map(slot => {
+      if (typeof slot === 'string') return slot;
+      return completedGames.get(slot.winnerOf)?.winner ?? slot.label;
+    });
+
+    participants.forEach(team => {
       const teamRow = document.createElement('div');
       teamRow.className = 'bracket-game__team';
       const teamName = document.createElement('span');
