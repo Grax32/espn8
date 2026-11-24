@@ -1,5 +1,8 @@
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.site-nav');
+const aboutSportDialog = document.querySelector('#about-dodge-ball');
+const aboutSportTrigger = document.querySelector('.about-sport-trigger');
+const aboutSportClose = document.querySelector('.dialog-close');
 
 menuButton?.addEventListener('click', () => {
   const isOpen = navigation.classList.toggle('open');
@@ -13,6 +16,17 @@ navigation?.addEventListener('click', event => {
     menuButton?.setAttribute('aria-expanded', 'false');
     if (menuButton) menuButton.textContent = 'Menu';
   }
+});
+
+aboutSportTrigger?.addEventListener('click', () => {
+  navigation?.classList.remove('open');
+  menuButton?.setAttribute('aria-expanded', 'false');
+  if (menuButton) menuButton.textContent = 'Menu';
+  aboutSportDialog?.showModal();
+});
+aboutSportClose?.addEventListener('click', () => aboutSportDialog?.close());
+aboutSportDialog?.addEventListener('click', event => {
+  if (event.target === aboutSportDialog) aboutSportDialog.close();
 });
 
 const teams = [

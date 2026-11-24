@@ -34,6 +34,7 @@
       <a href="#scores">Scores</a>
       <a href="#teams">Teams</a>
       <a href="#sport">The Sport</a>
+      <button class="about-sport-trigger" type="button" aria-haspopup="dialog">WTF is Dodge-ball?</button>
     </nav>
     <span class="edition">The Final Eight Edition</span>
   </header>
@@ -115,6 +116,23 @@
       </section>
     </div>
   </main>
+  <dialog id="about-dodge-ball" class="about-sport-dialog" aria-labelledby="about-sport-title">
+    <div class="about-sport-dialog__topline">
+      <p class="kicker">Know the game</p>
+      <button class="dialog-close" type="button" aria-label="Close Dodge-ball description">×</button>
+    </div>
+    <div class="about-sport-dialog__intro">
+      <p class="about-sport-dialog__eyebrow">Not dodgeball. It has a dash.</p>
+      <h2 id="about-sport-title">WTF is Dodge-ball?</h2>
+      <p>Dodge-ball is a five-versus-five vehicle sport played with Dodge cars and Dodge-badged trucks on an expanded soccer field.</p>
+    </div>
+    <div class="about-sport-dialog__details">
+      <p>Teams use controlled contact with a 10-foot regulation ball to drive it into an opposing goal that spans the full width of the field. There is no goalie: every car attacks, defends, and creates space.</p>
+      <p>The game follows the broad rhythm of soccer—kickoff, open play, goals, halves, and stoppage time—but replaces footwork with vehicle positioning and ball control. Any Dodge car or Dodge-badged truck from any year may compete when it meets event safety and inspection requirements.</p>
+      <p>The sport rewards pace, turning skill, coordinated formations, and smart use of the expanded field. Teams must keep the giant ball moving while preventing a clear lane to their own full-width goal.</p>
+    </div>
+    <p class="about-sport-dialog__note">Five cars. One giant ball. No place to hide.</p>
+  </dialog>
   <footer class="site-footer">
     <a class="brand" href="#top" aria-label="Eccentric Sports News home"><img src="assets/esn-duck-pads.png" alt="" width="42" height="42"><span class="brand-wordmark"><span>Eccentric Sports</span><b>News</b></span></a>
     <p>Unusual sports. Clear coverage.</p>
