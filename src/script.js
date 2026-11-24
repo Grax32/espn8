@@ -156,8 +156,8 @@ function renderTournamentFeature(results, day) {
     kicker.textContent = 'Next matchup';
     heading.textContent = `${nextMatchup.teams[0]} vs. ${nextMatchup.teams[1]}`;
     copy.textContent = `${nextMatchup.round} · ${nextMatchup.dayName}. The Final Eight resumes with another chance to advance.`;
-    link.textContent = 'Preview the matchup';
-    link.href = '#scores';
+    link.textContent = 'View the tournament bracket';
+    link.href = '#teams';
     return;
   }
 
@@ -167,8 +167,8 @@ function renderTournamentFeature(results, day) {
   copy.textContent = championship
     ? `${championship.winner} completed the Final Eight with a ${championship.score} championship win over ${championship.loser}. Relive the run to the cup.`
     : 'Relive the Final Eight and the run to the cup.';
-  link.textContent = 'See the championship recap';
-  link.href = '#daily-recap';
+  link.textContent = 'Read the championship report';
+  link.href = '#top-stories';
 }
 
 function renderDailyCoverage(results, day) {
